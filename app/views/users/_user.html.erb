@@ -1,0 +1,9 @@
+<tr>
+  <td class="text-center"><%= user.id %></td>
+  <td class="text-center"><%= user.name %></td>
+  <td class="text-center"><%= user.email %></td>
+  <td>
+    <%= link_to "編集", edit_user_path(user), class: "btn btn-primary btn-lg mr-3" %>
+    <%= link_to "削除", user_path(user), method: :delete, data:{confirm:"削除しますか？"}, class: "btn btn-danger btn-lg" %>
+  </td>
+</tr>

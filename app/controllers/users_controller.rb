@@ -6,7 +6,17 @@ class UsersController < ApplicationController
   end
 
   def new
+   @user = User.new
+  end
 
+  def create
+    @user = User.new(user_parameter)
+    if @user.save
+      redirect_to root_url, notice: "#{@user.name}を登録しました。"
+    else  
+      render :new
+    end
+    
   end
 
   def edit

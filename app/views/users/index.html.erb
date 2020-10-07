@@ -1,5 +1,6 @@
 <div class="text-center mt-5 mb-5"><h1>会員一覧</h1></div>
 
+<%= link_to '新規登録', new_user_path, class:"btn btn-primary mb-3" %>
 <% if @users.count >0 %>
   <table class="table table-bordered">
     <thead>
@@ -17,6 +18,9 @@
         </th>
       </tr>
     </thead>
+    <tbody>
+     <%= render @users%>
+    </tbody>
  </table>
 <% else %>
   <div class="p-5 bg-secondary text-center text-white">データありません</div>
