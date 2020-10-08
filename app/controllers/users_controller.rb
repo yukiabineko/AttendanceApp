@@ -24,6 +24,15 @@ class UsersController < ApplicationController
 
   def show
   end
+
+  def update
+    if @user.update_attributes(user_parameter)
+      redirect_to root_url, notice: "#{@user.name}を編集しました。"
+    else  
+      render :edit
+    end
+  end
+  
 private
   def user_parameter
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

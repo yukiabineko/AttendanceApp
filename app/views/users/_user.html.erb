@@ -1,6 +1,6 @@
 <tr>
   <td class="text-center"><%= user.id %></td>
-  <td class="text-center"><%= user.name %></td>
+  <td class="text-center"><%= link_to user.name, user, class: 'font-weight-bold' %></td>
   <td class="text-center"><%= user.email %></td>
   <td>
     <%= link_to "編集", edit_user_path(user), class: "btn btn-primary btn-lg mr-3" %>
