@@ -32,6 +32,13 @@ class UsersController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @user.destroy
+    redirect_to root_url, notice: "削除しました。"
+  else  
+  end
+  
   
 private
   def user_parameter

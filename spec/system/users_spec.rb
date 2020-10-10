@@ -45,11 +45,23 @@ describe "users", type: :system do
         click_on "更新する"
         expect(page).to  have_selector ".alert-success", text: "abi2を編集しました。"
       end
+    end
+  end
+
+  describe "item delete" do
+    context "delete" do
+      it "success" do
+        visit root_path
+        click_on "del#{@user.id}"
+        expect(page.driver.browser.switch_to.alert.text).to eq "削除しますか？"
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_selector ".alert-success", text: "削除しました。"
+      end
       
     end
     
-    
   end
+
   
   
   

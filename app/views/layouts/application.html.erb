@@ -13,14 +13,26 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
       <a class="navbar-brand text-white" href="#">サンプルアプリ</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item text-white">
-            <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link text-white" href="#">Link</a>
-          </li>
-      </ul>
+
+      
+        <ul class="nav navbar-nav mr-auto">
+         <% if current_user.present? %>
+           <li class="nav_item"></li>
+         <% end %>
+        </ul>
+       
+
+      
+         <ul class="nav navbar-nav">
+          <% if current_user.present? %>
+            <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'font-weight-bold text-white' %><li>
+          <% else %>  
+             <li class="nav-item"><%= link_to 'ログイン', login_path, class: 'font-weight-bold text-white' %></li>
+          <% end %>
+          </ul>
+      
+
+      </div>
     </nav>
     <div class="row">
       <div class="col-md-8 offset-2">
