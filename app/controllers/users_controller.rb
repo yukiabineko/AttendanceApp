@@ -23,6 +23,17 @@ class UsersController < ApplicationController
   end
 
   def show
+    @first_day = Date.today.beginning_of_month
+    @last_day = @first_day.end_of_month
+    (@first_day .. @last_day).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @days = @user.searchDay(@first_day, @last_day)
+    @week = %w(日 月 火 水 木 金 土)
+    
   end
 
   def update
