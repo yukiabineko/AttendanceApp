@@ -49,6 +49,11 @@ class UsersController < ApplicationController
     redirect_to root_url, notice: "削除しました。"
   else  
   end
+
+  def time_set
+    debugger
+  end
+  
   
   
 private

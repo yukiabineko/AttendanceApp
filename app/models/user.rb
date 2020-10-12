@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true,allow_blank: true
 
   def searchDay(first, last)
-    self.attendances.where(worked_on: first .. last).order(id: :DESC)
+    self.attendances.where(worked_on: first .. last).order(id: :ASC)
   end
   
   

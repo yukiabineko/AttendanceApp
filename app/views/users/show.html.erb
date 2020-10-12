@@ -53,11 +53,19 @@
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
         <td class="text-center"><%= l(day.started_at, format: :hour) if day.started_at.present?  %></td>
         <td class="text-center"><%= l(day.started_at, format: :min) if day.started_at.present?  %></td>
-        <td class="text-center"></td>
+        <td class="text-center">
+          <% if day.started_at.nil? && day.worked_on == Date.today %>
+            <%= button_to '出勤',set_time_attendance_path(day), class: 'btn btn-primary btn-block' %>
+          <% end %>
+        </td>
         <td class="text-center"><%= l(day.finished_at, format: :hour) if day.finished_at.present?  %></td>
         <td class="text-center"><%= l(day.finished_at, format: :min) if day.finished_at.present?  %></td>
         <td class="text-center"></td>
-        <td class="text-center"></td>
+        <td class="text-center">
+          <% if day.finished_at.nil? && day.started_at.present? && day.worked_on == Date.today %>
+             <%= button_to '退勤',set_time_attendance_path(day), class: 'btn btn-primary btn-block' %>
+          <% end %>
+        </td>
         <td class="text-center"><%= day.note %></td>
       </tr>
     <% end %>
