@@ -26,6 +26,12 @@
 </table>
 <div class="border-top"></div>
 <div class="text-center mb-5 mt-2">勤怠管理表</div>
+<ul class="time-ul">
+  <li class="time-list"><%= link_to "←", user_path(@user, params:{first_day: @first_day.prev_month}), class: 'btn btn-primary' %></li>
+  <li class="time-list"><%= l(@first_day, format: :month) %></li>
+  <li class="time-list"><%= link_to "→", user_path(@user, params:{first_day: @first_day.next_month}), class: 'btn btn-primary' %></li>
+</ul>
+<%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -60,14 +66,26 @@
         </td>
         <td class="text-center"><%= l(day.finished_at, format: :hour) if day.finished_at.present?  %></td>
         <td class="text-center"><%= l(day.finished_at, format: :min) if day.finished_at.present?  %></td>
-        <td class="text-center"></td>
         <td class="text-center">
           <% if day.finished_at.nil? && day.started_at.present? && day.worked_on == Date.today %>
              <%= button_to '退勤',set_time_attendance_path(day), class: 'btn btn-primary btn-block' %>
           <% end %>
+        </td>
+        <td class="text-center">
         </td>
         <td class="text-center"><%= day.note %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<style>
+.time-ul{
+  list-style: none;
+  text-align:center
+}
+.time-list{
+  display: inline;
+  margin-right:20%;
+}
+
+</style>

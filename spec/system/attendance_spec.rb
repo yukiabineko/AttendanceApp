@@ -53,6 +53,22 @@ describe "attendances", type: :system  do
         expect(page).to have_selector '.alert-success', text:'お疲れ様です。'  #->出勤処理後退勤ボタンが消失する。
       end
     end
+    #←ボタンによる月切り替え前月
+    context "prev month change" do
+      it "success" do
+        click_on '←'
+        expect(page).to have_content @first.prev_month.strftime('%m月')
+      end
+    end
+
+    #→ボタンによる月切り替え次月
+    context "next month change" do
+      it "success" do
+        click_on '→'
+        expect(page).to have_content @first.next_month.strftime('%m月')
+      end
+    end
+    
   end
 
   

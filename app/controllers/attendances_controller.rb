@@ -1,6 +1,17 @@
 class AttendancesController < ApplicationController
+
   def show
   end
+
+  def edit
+    @user = User.find( params[:user_id])
+    @first_day = Date.parse( params[:worked_on])
+    @last_day = @first_day.end_of_month
+    @days = @user.searchDay(@first_day, @last_day)
+    @week = %w(日 月 火 水 木 金 土)
+    
+  end
+  
 
   def set_time
   　message = ''

@@ -5,10 +5,13 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users do
+    resources :attendances, param: :worked_on, only:[:edit] #->勤怠編集画面
   end
 
-  resources :attendances do
-    post :set_time, on: :member
+  resources :attendances, only:[:show] do
+    member do
+      post :set_time
+    end
   end
   root 'users#index'
 end

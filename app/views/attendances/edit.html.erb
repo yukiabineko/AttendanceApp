@@ -1,0 +1,35 @@
+<div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}さん勤怠編集" %></h1></div>
+
+<%= form_with model: @user, url: "#", method: :patch, local:true do |f| %>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="bg-light text-center align-middle">日付</th>
+      <th class="bg-light text-center align-middle">曜日</th>
+      <th class="bg-light text-center">出勤時間</th>
+      <th class="bg-light text-center">退勤時間</th>
+      <th class="bg-light text-center align-middle">合計時間</th>
+      <th class="bg-light text-center align-middle">メモ</th>
+    </tr>
+    
+  </thead>
+  <tbody>
+    <% @days.each do |day| %>
+    <%= f.fields_for "attendances", day do |af| %>
+      <tr>
+        <td class="text-center"><%= l(day.worked_on, format: :short) %></td>
+        <td class="text-center"><%= @week[day.worked_on.wday] %></td>
+        <td><%= af.time_field :started_at, class:'form-control' %></td>
+        <td><%= af.time_field :finished_at, class:'form-control' %></td>
+        <td></td>
+        <td><%= af.text_field :note, class:'form-control' %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="text-center">
+  <%= link_to '戻る', user_path(@user, params:{first_day: params[:worked_on]}), class:"btn btn-secondary btn-lg mr-3" %>
+  <%= f.submit '編集', class: 'btn btn-primary btn-lg'%>
+</div>
+<% end %>

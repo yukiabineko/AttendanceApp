@@ -23,7 +23,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @first_day = Date.today.beginning_of_month
+    if params[:first_day].nil?
+      @first_day = Date.today.beginning_of_month
+    else
+      @first_day = Date.parse( params[:first_day])
+    end
+   
     @last_day = @first_day.end_of_month
     (@first_day .. @last_day).each do |day|
       unless @user.attendances.any?{|attendance| attendance.worked_on == day}
@@ -50,12 +55,7 @@ class UsersController < ApplicationController
   else  
   end
 
-  def time_set
-    debugger
-  end
-  
-  
-  
+
 private
   def user_parameter
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
