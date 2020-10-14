@@ -9,6 +9,21 @@ class User < ApplicationRecord
   def searchDay(first, last)
     self.attendances.where(worked_on: first .. last).order(id: :ASC)
   end
+
+
+  #月合計稼働時間
+
+  def month_total(monthData)
+    total = 0.0
+    monthData.each do |day|
+      if day.started_at.present? && day.finished_at.present?
+        total += day.day_total_time.to_i #->attendance model参照 
+      end
+    end
+    return total
+  end
+  
+
   
   
   

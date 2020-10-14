@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     end
     @days = @user.searchDay(@first_day, @last_day)
     @week = %w(日 月 火 水 木 金 土)
+    @work_count = @user.attendances.work_count                           #-> modelより
     
   end
 
