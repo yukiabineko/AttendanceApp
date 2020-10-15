@@ -37,4 +37,6 @@ class Attendance < ApplicationRecord
   #出勤日数
   scope :work_count, -> { where.not(finished_at: nil).count}
  
+
+ 
 end

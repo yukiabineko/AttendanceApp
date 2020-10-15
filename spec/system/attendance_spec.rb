@@ -70,6 +70,43 @@ describe "attendances", type: :system  do
     end
     
   end
+  #######################user show 合計関連 #############################################
+  describe "total_data_view" do
+    before do
+      attend = @user.attendances.all
+      fs = attend.first
+      ls = attend.last
+      fs.update_attributes(started_at: '2020-10-12 08:00', finished_at: '2020-10-12 12:00')
+      ls.update_attributes(started_at: '2020-10-12 08:00', finished_at: '2020-10-12 12:00')
+      visit login_path
+      fill_in "session[email]",	with: "dog@example.com" 
+      fill_in "session[password]",	with: "123" 
+      click_button 'ログイン'
+    end
+
+    #出勤日数
+    context "work count" do
+      it "day count success" do
+        @user.attendances.work_count
+        expect(page).to have_content '2日'
+      end
+      
+    end
+
+    #出勤時間総数
+    context "work month total time" do
+      it "month total time success" do
+        days = @user.searchDay(@first, @last)
+        @user.month_total(days)
+        expect(page).to have_content '8.0'
+      end
+      
+    end
+
+
+
+  end
+  
 
   
   

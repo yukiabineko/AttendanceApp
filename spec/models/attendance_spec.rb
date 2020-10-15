@@ -29,6 +29,7 @@ RSpec.describe Attendance, type: :model do
     end
   end
 
+  #日付ごとの合計時間
   
   describe "day_total check" do
     it "success" do

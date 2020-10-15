@@ -1,6 +1,11 @@
 <div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}さん勤怠編集" %></h1></div>
+<% unless @errors.blank? %>
+  <% @errors.each do |err| %>
+    <div><%= err %></div>
+  <% end %>
+<% end %>
 
-<%= form_with model: @user, url: "#", method: :patch, local:true do |f| %>
+<%= form_with model: @user, url: user_attendance_path(@user, @first_day), method: :patch, local:true do |f| %>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -15,14 +20,14 @@
   </thead>
   <tbody>
     <% @days.each do |day| %>
-    <%= f.fields_for "attendances", day do |af| %>
+    <%= f.fields_for "attendances[]", day do |af| %>
       <tr>
-        <td class="text-center"><%= l(day.worked_on, format: :short) %></td>
+        <td class="text-center"><%= l(day.worked_on, format: :short)  %></td>
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
-        <td><%= af.time_field :started_at, class:'form-control' %></td>
-        <td><%= af.time_field :finished_at, class:'form-control' %></td>
+        <td><%= af.time_field :started_at, class:'form-control' if day.worked_on < Date.today %></td>
+        <td><%= af.time_field :finished_at, class:'form-control' if day.worked_on < Date.today %></td>
         <td></td>
-        <td><%= af.text_field :note, class:'form-control' %></td>
+        <td><%= af.text_field :note, class:'form-control' if day.worked_on < Date.today %></td>
       </tr>
       <% end %>
     <% end %>
