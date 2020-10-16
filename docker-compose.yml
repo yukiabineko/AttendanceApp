@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     ports: 
-      - '3306:3306' # ホストからゲストへポートフォワード
+      - '3316:3306' # ホストからゲストへポートフォワード
     environment:
       MYSQL_DATABASE: abi
       MYSQL_ROOT_PASSWORD: password
