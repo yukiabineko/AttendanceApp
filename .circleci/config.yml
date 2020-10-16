@@ -25,12 +25,14 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment: # add POSTGRES environment variables.
-          RAILS_ENV: test
-          DB_HOST: db
-          DB_USERNAME: 'abi'
-          DB_PASSWORD: 'abi'
+       
       - image: circleci/mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: abi
+            MYSQL_DATABASE: abi
+            MYSQL_USER: abi
+            MYSQL_PASSWORD: abi
+          
         auth:
             username: mydockerhub-user
             password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
