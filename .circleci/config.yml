@@ -18,11 +18,8 @@ jobs:
       - ruby/install-deps # use the ruby orb to install dependencies
       
           
-  test:  # our next job, called "test"
-    # we run "parallel job containers" to enable speeding up our tests;
-    # this splits our tests across multiple containers.
+  test:  
     parallelism: 3 
-    # here we set TWO docker images.
     docker:
       - image: circleci/ruby:2.5.7
         auth:
@@ -48,11 +45,7 @@ jobs:
     steps:
       - checkout 
       - ruby/install-deps 
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-      # Here we make sure that the secondary container boots 
-      # up before we run operations on the database.
+  
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
