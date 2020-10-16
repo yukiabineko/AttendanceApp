@@ -30,10 +30,10 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_USERNAME: 'abi'
           DB_PASSWORD: 'abi'
-   - image: circleci/mysql:5.7
-     auth:
-       username: mydockerhub-user
-       password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: circleci/mysql:5.7
+        auth:
+            username: mydockerhub-user
+            password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout 
       - ruby/install-deps 
