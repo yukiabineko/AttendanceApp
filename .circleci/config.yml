@@ -36,11 +36,9 @@ jobs:
           MYSQL_PASSWORD: abi
     # environment variables specific to Ruby/Rails, applied to the primary container.
     environment:
-      BUNDLE_JOBS: "3"
-      BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: circleci-demo-ruby
-      PGPASSWORD: ""
+      DB_HOST: 'db'
+      DB_USERNAME: 'abi'
+      DB_PASSWORD: 'abi'
       RAILS_ENV: test
     # A series of steps to run, some are similar to those in "build".
     steps:
