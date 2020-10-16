@@ -22,9 +22,11 @@ jobs:
     parallelism: 3 
     docker:
       - image: circleci/ruby:2.5.7
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: 'abi'
+          DB_PASSWORD: 'abi'
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: abi
