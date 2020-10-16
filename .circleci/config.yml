@@ -25,13 +25,12 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-       
       - image: circleci/mysql:5.7
-          environment:
-            MYSQL_ROOT_PASSWORD: abi
-            MYSQL_DATABASE: abi
-            MYSQL_USER: abi
-            MYSQL_PASSWORD: abi
+        environment:
+          MYSQL_ROOT_PASSWORD: abi
+          MYSQL_DATABASE: abi
+          MYSQL_USER: abi
+          MYSQL_PASSWORD: abi
           
         auth:
             username: mydockerhub-user
