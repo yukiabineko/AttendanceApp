@@ -5,6 +5,7 @@ jobs: # 一連のステップ
     docker: # Docker でステップを実行します
       - image: circleci/ruby:2.4.2-jessie-node # このイメージをすべての `steps` が実行されるプライマリ コンテナとして使用します
         environment: # プライマリ コンテナの環境変数
+          BUNDLER_VERSION: 2.0.1
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
@@ -22,8 +23,14 @@ jobs: # 一連のステップ
       # Bundler のバージョンを指定します
 
       - run:
-          name: Bundler の指定
-          command: bundle -v
+          name: setup bundler
+          command: |
+            sudo gem update --system
+            sudo gem uninstall bundler
+            sudo rm /usr/local/bin/bundle
+            sudo rm /usr/local/bin/bundler
+            sudo gem install bundler
+
 
       # バンドル キャッシュを復元します
       # 依存関係キャッシュについては https://circleci.com/ja/docs/2.0/caching/ をお読みください
