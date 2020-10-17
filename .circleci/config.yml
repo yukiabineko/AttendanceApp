@@ -5,10 +5,6 @@ jobs: # 一連のステップ
     docker: # Docker でステップを実行します
       - image: circleci/ruby:2.5.7 # このイメージをすべての `steps` が実行されるプライマリ コンテナとして使用します
         environment: # プライマリ コンテナの環境変数
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
-          BUNDLE_PATH: vendor/bundle
-          BUNDLER_VERSION: 2.0.1
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           DB_USERNAME: 'abi'
