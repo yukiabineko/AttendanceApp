@@ -32,6 +32,7 @@ services:
     stdin_open: true
     depends_on:
       - db # DB側のコンテナが出来上がってからwebを実行する
+      - test-db
       - chrome
     ports:
       - "3000:3000" # ホストからゲストへポートフォワード
