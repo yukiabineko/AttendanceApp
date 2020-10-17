@@ -7,10 +7,19 @@ services:
     ports: 
       - '3316:3306' # ホストからゲストへポートフォワード
     environment:
-      MYSQL_DATABASE: abi
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: abi
       MYSQL_PASSWORD: abi
+      MYSQL_DATABASE: abi
+  test-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: 'abi'
+      MYSQL_PASSWORD: 'abi'
+      MYSQL_DATABASE: test_abi
+    ports:
+      - '3307:3306' # ローカルPCから接続するために設定
   web:
     build:
       context: .
