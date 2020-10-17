@@ -8,6 +8,7 @@ default: &default
   port: 3306
   username: abi
   password: abi
+  database: abi
 
 test:
   <<: *default
