@@ -2,8 +2,8 @@ test:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: 'root'
-  password: 'password'
+  username: 'abi'
+  password: 'abi'
   port: 3306
-  host: 'localhost'
-  database: abi
+  host: '127.0.0.1'
+  database: test_abi
