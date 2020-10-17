@@ -1,86 +1,66 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here 
-      - image: circleci/ruby:2.5.7
-        environment:
-          BUNDLER_VERSION: 2.0.1
-          RAILS_ENV: test
-          DB_HOST: db
-          DB_USERNAME: 'abi'
-          DB_PASSWORD: 'abi'
+    - image: circleci/ruby:2.5.3-node-browsers
+      environment:
+        - BUNDLER_VERSION: 2.0.2
+        - RAILS_ENV: 'test'
+    - image: circleci/mysql:5.7
+      environment:
+        - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+        - MYSQL_ROOT_HOST: '127.0.0.1'
 
-      - image: circleci/mysql:5.7.22
-        environment:
-          MYSQL_DATABASE: 'abi'
-          MYSQL_USER: 'abi'
-          MYSQL_ROOT_PASSWORD: 'abi'
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+    working_directory: ~/sample_app  #自身のアプリディレクトリ名を設定  
 
-    working_directory: ~/repo
 
     steps:
-      - checkout
-      
-      - run:
-          name: setup bundler
-          command: |
-            sudo gem update --system
-            sudo gem install bundler
-        # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+    - checkout
 
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "Gemfile.lock" }}
+        - v1-dependencies-
 
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+    - run:
+        name: install dependencies
+        command: |
+          gem install bundler -v 2.0.2
+          bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      # Database setup
-      - run:
-          name: bundle exec
-          command: |
-            dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-            bundle exec rake db:create
-            bundle exec rake db:schema:load
+    - save_cache:
+        paths:
+        - ./vendor/bundle
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
-              circleci tests split --split-by=timings)"
+    # Database setup
+    - run: mv ./config/database.yml.ci ./config/database.yml
 
-            sudo gem install bundler
-            sudo gem install rspec
-            sudo gem install rspec-core
-            bundle exec rspec \
-              --format progress \
-              --format RspecJunitFormatter \
-              --out /tmp/test-results/rspec.xml \
-              --format progress \
-              $TEST_FILES
+    # Database setup
+    - run:
+        name: Databasesetup
+        command: |
+           bundle exec rake db:create
+           bundle exec rake db:schema:load
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+    # run tests!
+    - run:
+        name: Run rspec
+        command: |
+          mkdir /tmp/test-results
+          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
+            circleci tests split --split-by=timings)"
+
+          bundle exec rspec \
+            --format progress \
+            --format RspecJunitFormatter \
+            --out /tmp/test-results/rspec.xml \
+            --format progress \
+            $TEST_FILES
+
+    # collect reports
+    - store_test_results:
+        path: /tmp/test-results
+    - store_artifacts:
+        path: /tmp/test-results
+        destination: test-results
