@@ -29,7 +29,9 @@ jobs:
 
     steps:
       - checkout
-      
+      - run:
+          name: yarn install
+          command: yarn install
       - run:
           name: setup bundler
           command: |
@@ -45,6 +47,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            yarn install --check-files
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
