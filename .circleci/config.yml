@@ -5,7 +5,7 @@ jobs:
     - image: circleci/ruby:2.5.7
       environment:
         - BUNDLER_VERSION: 2.0.2
-        - RAILS_ENV: 'development'
+        - RAILS_ENV: 'test'
     - image: circleci/mysql:5.7
       environment:
         - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
