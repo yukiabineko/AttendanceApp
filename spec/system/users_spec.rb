@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "users",js: true, type: :system do
+describe "users", type: :system do
   before do
     @user = User.create!(
       name: 'abi', 
@@ -51,7 +51,7 @@ describe "users",js: true, type: :system do
     end
   end
 
-  describe "item delete" do
+  describe "item delete",js: true, type: :system  do
     context "delete" do
       it "success" do
         visit root_path
