@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "users", type: :system do
+describe "users",js: true, type: :system do
   before do
     @user = User.create!(
       name: 'abi', 
@@ -8,10 +8,13 @@ describe "users", type: :system do
       password: "123", 
       password_confirmation: "123"
       )
+      visit login_path
+      fill_in "session[email]",	with: "abi@example.com" 
+      fill_in "session[password]",	with: "123" 
+      click_button "ログイン"
   end
   describe "user index view" do
     it "user.name present" do
-      visit root_path
       expect(page).to have_content 'abi'
     end
   end
@@ -53,8 +56,7 @@ describe "users", type: :system do
       it "success" do
         visit root_path
         click_on "del#{@user.id}"
-        expect(page.driver.browser.switch_to.alert.text).to eq "削除しますか？"
-        page.driver.browser.switch_to.alert.accept
+        expect(accept_confirm).to eq "削除しますか？"
         expect(page).to have_selector ".alert-success", text: "削除しました。"
       end
       

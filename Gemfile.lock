@@ -44,8 +44,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    archive-zip (0.12.0)
-      io-like (~> 0.3.0)
     arel (9.0.0)
     autoprefixer-rails (10.0.1.0)
       execjs
@@ -68,9 +66,6 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    chromedriver-helper (2.1.1)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
     diff-lcs (1.4.4)
@@ -81,7 +76,6 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
-    io-like (0.3.1)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
     libv8 (8.4.255.0-x86_64-linux)
@@ -160,6 +154,8 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
     sass (3.7.4)
@@ -230,7 +226,6 @@ DEPENDENCIES
   bootstrap
   byebug
   capybara (>= 2.15)
-  chromedriver-helper
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mini_racer
@@ -238,6 +233,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.2)
   rspec-rails
+  rspec_junit_formatter
   sass-rails (~> 5.0)
   selenium-webdriver
   spring
