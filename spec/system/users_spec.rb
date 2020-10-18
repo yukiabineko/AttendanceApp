@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "users",js: true, type: :system do
+describe "users",type: :system do
   before do
     @user = User.create!(
       name: 'abi', 
@@ -18,7 +18,7 @@ describe "users",js: true, type: :system do
       expect(page).to have_content 'abi'
     end
   end
-  describe "user record new" do
+  describe "user record new",js:true do
     it "success" do
       visit new_user_path
       fill_in "user[name]",	with: "abi" 
