@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "users",type: :system do
+describe "users",js: true, type: :system do
   before do
     @user = User.create!(
       name: 'abi', 
