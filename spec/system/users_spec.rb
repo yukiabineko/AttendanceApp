@@ -18,7 +18,7 @@ describe "users", type: :system do
       expect(page).to have_content 'abi'
     end
   end
-  describe "user record new",js:true do
+  describe "user record new" do
     it "success" do
       visit new_user_path
       fill_in "user[name]",	with: "abi" 
@@ -51,7 +51,7 @@ describe "users", type: :system do
     end
   end
 
-  describe "item delete",js: true  do
+  describe "item delete"  do
     context "delete" do
       it "success" do
         visit root_path
