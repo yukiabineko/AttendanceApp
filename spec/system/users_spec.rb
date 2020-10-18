@@ -51,7 +51,7 @@ describe "users", type: :system do
     end
   end
 
-  describe "item delete",js: true, type: :system  do
+  describe "item delete",js: true  do
     context "delete" do
       it "success" do
         visit root_path
