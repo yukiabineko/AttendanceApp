@@ -51,7 +51,18 @@ describe "users", type: :system do
     end
   end
 
- 
+=begin
+
+  describe "item delete",js:true  do
+    it "success" do
+      visit root_path
+      click_on "del#{@user.id}"
+      expect(accept_confirm).to eq "削除しますか？"
+      expect(page).to have_selector ".alert-success", text: "削除しました。"
+    end
+        
+  end
+=end 
   
   
 end
