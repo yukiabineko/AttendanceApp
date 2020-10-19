@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_parameter)
     if @user.save
-      redirect_to root_url, notice: "#{@user.name}を登録しました。"
+      redirect_to @user, notice: "#{@user.name}を登録しました。"
     else  
       render :new
     end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_parameter)
-      redirect_to root_url, notice: "#{@user.name}を編集しました。"
+      redirect_to @user, notice: "#{@user.name}を編集しました。"
     else  
       render :edit
     end

@@ -9,5 +9,7 @@
       name: 'test', 
       email: 'test@example.com', 
       password: "123", 
-      password_confirmation: "123"
+      password_confirmation: "123",
+      department: '店長',
+      admin: true
     )
