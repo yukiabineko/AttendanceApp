@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :user_set, only: [ :edit, :update, :show, :destroy]
+  before_action :admin_check, only: [:index, :info_edit]
 
   def index
     @users = User.all
@@ -56,6 +57,11 @@ class UsersController < ApplicationController
   else  
   end
 
+#管理者による追加情報登録ページ
+  def info_edit
+    
+  end
+
 
 private
   def user_parameter
@@ -65,6 +71,14 @@ private
   def user_set
     @user = User.find( params[:id] )
   end
+
+  #管理者以外アクセス不可ユーザーページに戻る
+  def admin_check
+    redirect_to current_user unless current_user.admin?
+  end
+  
+
+  
   
   
 end

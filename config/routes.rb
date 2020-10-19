@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :attendances, param: :worked_on, only:[:edit, :update] #->勤怠編集画面
+    member do
+      get :info_edit
+    end
     
   end
 

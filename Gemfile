@@ -60,6 +60,7 @@ group :test do
   gem 'rspec-rails'
   gem 'rspec_junit_formatter' 
   gem 'webdrivers'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
