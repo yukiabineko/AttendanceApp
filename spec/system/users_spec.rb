@@ -53,7 +53,7 @@ describe "users", type: :system do
 
 =begin
 
-  describe "item delete",js:true  do
+  describe "item delete",js:true  do    #ローカルではこのテスト通るがcircleciでは失敗するため調査中
     it "success" do
       visit root_path
       click_on "del#{@user.id}"
