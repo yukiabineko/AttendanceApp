@@ -64,10 +64,30 @@ class UsersController < ApplicationController
     @user = User.find( params[:id] )
   end
 
+#管理者による追加情報更新処理
+  def info_update
+    @user = User.find( params[:id] )
+    if @user.update_attributes(user_parameter)
+      redirect_to root_url, notice: "#{@user.name}の契約内容を更新しました。"
+    else
+      flash.now[:notice] = '失敗しました。'
+      render :info_edit
+    end
+
+  end
+
 
 private
   def user_parameter
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(
+      :name, 
+      :email, 
+      :password, 
+      :password_confirmation, 
+      :department, 
+      :start_work_time,
+      :finish_work_time
+    )
   end
 
   def user_set

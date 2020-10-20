@@ -22,6 +22,24 @@ class User < ApplicationRecord
     end
     return total
   end
+
+  #契約稼働時間計算
+  def operating_time_calc
+    if self.start_work_time.present? && self.finish_work_time.present?
+      start = self.start_work_time
+      start_array = start.split(':')
+      start_time = (start_array[0].to_i) * 60 + start_array[1].to_i
+      
+      finish = self.finish_work_time
+      finish_array = finish.split(':')
+      finish_time = (finish_array[0].to_i) * 60 + finish_array[1].to_i
+
+      operating_time = (finish_time - start_time)/60.to_f
+      return operating_time
+    else
+      return ''
+    end
+  end
   
 
   

@@ -1,6 +1,5 @@
 <div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}詳細" %></h1></div>
 
-<%= link_to '戻る', users_path, class:"btn btn-secondary mb-3" %>
 <table class="table table-bordered">
   <tbody>
     <tr>
@@ -10,10 +9,10 @@
       <td class="text-center">
         <%= @user.id %>
       </td>
-      <th class="bg-dark text-center text-white">
+      <th colspan="2" class="bg-dark text-center text-white">
         <%= User.human_attribute_name :name %>
       </th>
-      <td class="text-center">
+      <td colspan="2" class="text-center">
         <%= @user.name %>
       </td>
       <th class="bg-dark text-center text-white">
@@ -22,6 +21,32 @@
       <td class="text-center">
         <%= @user.email %>
       </td>
+    </tr>
+    <!-- user info ２列目-->
+    <tr>
+      <th class="bg-dark text-center text-white">
+        <%= User.human_attribute_name :department %>
+      </th>
+       <td class="text-center">
+        <%= @user.department.present?? @user.department : '未登録' %>
+      </td>
+       <th class="bg-dark text-center text-white">
+        <%= User.human_attribute_name :start_work_time %>
+       </th>
+       <td class="text-center">
+        <%= @user.start_work_time.present?? @user.start_work_time : '未登録' %>
+       </td>
+       <th class="bg-dark text-center text-white">
+         <%= User.human_attribute_name :finish_work_time %>
+       </th>
+       <td class="text-center">
+         <%= @user.finish_work_time.present?? @user.finish_work_time : '未登録' %>
+       </td>
+       <th class="bg-dark text-center text-white">稼働時間</th>
+       <td class="text-center">
+         <%= "#{@user.operating_time_calc}時間" if @user.operating_time_calc.present? %>
+       </td>
+      
     </tr>
   </tbody>    
 </table>
