@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :user_set, only: [ :edit, :update, :show, :destroy]
+  before_action :user_set, only: [ :edit, :update, :destroy]
   before_action :admin_check, only: [:index, :info_edit]
+  before_action :other_user_access, only: [:show]
 
   def index
     @users = User.all
@@ -24,6 +25,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find( params[:id] )
     if params[:first_day].nil?
       @first_day = Date.today.beginning_of_month
     else
@@ -59,7 +61,7 @@ class UsersController < ApplicationController
 
 #管理者による追加情報登録ページ
   def info_edit
-    
+    @user = User.find( params[:id] )
   end
 
 
@@ -74,8 +76,18 @@ private
 
   #管理者以外アクセス不可ユーザーページに戻る
   def admin_check
-    redirect_to current_user unless current_user.admin?
+    redirect_to current_user,notice: '管理者専用です。' unless current_user.admin?
   end
+
+   #管理者以外URLで他のユーザーのページアクセス禁止
+   def other_user_access
+    user  = User.find( params[:id])
+     if  user.id  != current_user.id
+      unless current_user.admin?
+        redirect_to current_user,notice: '不正な操作です。'
+      end
+     end
+   end
   
 
   

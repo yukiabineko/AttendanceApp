@@ -21,6 +21,7 @@ describe "users", type: :system do
       fill_in "session[password]",	with: "123" 
       click_button "ログイン"
   end
+#****************************************************************************************************
   describe "user index view" do
     it "user.name present" do
       expect(page).to have_content 'abi'
@@ -39,15 +40,24 @@ describe "users", type: :system do
         expect(page).to have_selector('#del2')
       end
     end
-  #一管理ユーザーのため従業員契約ページURLでへアクセス可
+  #管理ユーザーのため従業員契約ページURLでへアクセス可
   context "link info edit" do
     it "success" do
       visit info_edit_user_path(@user2)
-      expect(page).to  have_no_content "#{@user2}契約情報入力"
+      expect(page).to  have_content "#{@user2.name}契約情報入力"
+    end
+  end
+
+  #管理者のため他の従業員の勤怠ページアクセス可能
+  context "other user page access" do
+    it "success" do
+      visit user_path(@user2)
+      expect(page).to  have_content "#{@user2.name}詳細"
     end
   end
     
-  end
+end
+#*************************************************************************************************************
   describe "user record new" do
     it "success" do
       visit new_user_path
@@ -123,15 +133,17 @@ describe "not admin user" do
   context "header null users_path link" do
     it "success" do
       visit info_edit_user_path(@user2)
-      expect(page).to  have_no_content "#{@user2}契約情報入力"
+      expect(page).to  have_no_content "#{@user2.name}契約情報入力"
     end
   end
-  
-  
-end
 
-
-
-  
-  
+  #一般ユーザーのため従業員契約ページURLでへアクセス可
+  context "link info edit" do
+    it "success" do
+      visit info_edit_user_path(@user)
+      expect(page).to  have_selector ".alert-success", text:"管理者専用です。"
+    end
+  end
+ end
+ #****************************************************************************** 
 end
