@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session_parameter[:email])
     if user&.authenticate(session_parameter[:password])
       session[:user_id] = user.id
-      redirect_to user, notice: 'ログインしました。'
+      flash[:notice] = 'ログインしました。'
+      user.admin? ? (redirect_to root_url) : (redirect_to user)
     else  
       flash.now[:notice] = '認証失敗'
       render :new

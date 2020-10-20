@@ -18,6 +18,9 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード確認
+        department: 担当
+        start_work_time: 開始時間
+        finish_work_time: 終了時間
   date:
     abbr_day_names:
     - 日
