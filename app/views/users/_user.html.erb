@@ -1,12 +1,38 @@
 <tr>
-  <td class="text-center"><%= user.id %></td>
-  <td class="text-center"><%= link_to user.name, user, class: 'font-weight-bold' %></td>
-  <td class="text-center"><%= user.email %></td>
-  <td>
+  <td style="border:none;" class="pb-n5">
+    <%= user.name %>
     <% unless user.admin %>
-      <%= link_to "編集", edit_user_path(user), class: "btn btn-primary btn-lg mr-3" %>
-      <%= link_to "契約情報入力", info_edit_user_path(user), class: "btn btn-primary btn-lg mr-3" %>
-      <%= link_to "削除", user_path(user), method: :delete, id: "del#{user.id}", data:{confirm:"削除しますか？"}, class: "btn btn-danger btn-lg" %>
-    <% end %>
+      <p></p>
+      |<%= link_to "削除", user_path(user), method: :delete, id: "del#{user.id}", data:{confirm:"削除しますか？"}, class: "btn btn-primary" unless user.admin? %></td>
+      <% end %>
   </td>
 </tr>
+<% unless user.admin %>
+  <tr>
+    <td style="border:none;" >
+        <div  class="rounded pt-2 pb-1 shadow " style="border:none;background-color:#A4C6FF;margin-top:-2%;">
+            <button 
+            class='btn btn-primary btn-lg ml-2 accordion'>編集</button> 
+          <span class="hide">
+            <%= render 'form',{user: user} %>
+          </span>
+        </div>
+    </td>
+  </tr>
+ 
+<% end %>
+<style>
+  .hide{
+    display:none;
+  }
+</style>
+<script>
+  
+</script>
+<!-- 
+ <% unless user.admin %>
+     
+      <%= link_to "契約情報入力", info_edit_user_path(user), class: "btn btn-primary btn-lg mr-3" %>
+       <%= link_to "編集", edit_user_path(user), class: "btn btn-primary btn-lg ml-2" %>
+    <% end %>
+-->

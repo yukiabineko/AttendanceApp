@@ -2,22 +2,7 @@
 
 <%= link_to '新規登録', new_user_path, class:"btn btn-primary mb-3" %>
 <% if @users.count >0 %>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="bg-dark text-center text-white">
-          <%= User.human_attribute_name :id %>
-        </th>
-        <th class="bg-dark text-center text-white">
-          <%= User.human_attribute_name :name %>
-        </th>
-        <th class="bg-dark text-center text-white">
-          <%= User.human_attribute_name :email %>
-        </th>
-        <th class="bg-dark text-center text-white">
-        </th>
-      </tr>
-    </thead>
+  <table class="table index-table" >
     <tbody>
      <%= render @users%>
     </tbody>
