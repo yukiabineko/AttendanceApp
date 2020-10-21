@@ -25,9 +25,19 @@
        
 
       
-         <ul class="nav navbar-nav">
+         <ul class="nav navbar-nav mr-5">
           <% if current_user.present? %>
-            <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'font-weight-bold text-white' %><li>
+             <li class="nav-item dropdown mr-5">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                メニュー
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item' %>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
           <% else %>  
              <li class="nav-item"><%= link_to 'ログイン', login_path, class: 'font-weight-bold text-white' %></li>
           <% end %>

@@ -12,10 +12,12 @@
     <td style="border:none;" >
         <div  class="rounded pt-2 pb-1 shadow " style="border:none;background-color:#A4C6FF;margin-top:-2%;">
             <button 
-            class='btn btn-primary btn-lg ml-2 accordion'>編集</button> 
-          <span class="hide">
-            <%= render 'form',{user: user} %>
-          </span>
+            class='btn btn-primary btn-lg ml-2 accordion'
+            id="<%= user.id %>"
+            >編集</button> 
+          <div id="hide<%=user.id %>" class="hide">
+            <%= render 'user_edit',{user: user} %>
+          </div>
         </div>
     </td>
   </tr>

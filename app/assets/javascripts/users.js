@@ -3,7 +3,8 @@
 document.addEventListener('turbolinks:load',function(){
   document.querySelectorAll(".accordion").forEach(function(btn){
     $(btn).on("click", function() {
-        $(this).next().slideToggle();
+        var id = btn.id
+        $('#hide'+ id).slideToggle();
     });
   })   
 });

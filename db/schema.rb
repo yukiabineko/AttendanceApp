@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_081300) do
+ActiveRecord::Schema.define(version: 2020_10_21_110320) do
 
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.date "worked_on"
@@ -33,6 +33,10 @@ ActiveRecord::Schema.define(version: 2020_10_19_081300) do
     t.string "start_work_time"
     t.string "finish_work_time"
     t.string "department"
+    t.integer "employee_number"
+    t.integer "uid"
+    t.string "basic_work_time"
+    t.boolean "superior", default: false
   end
 
 end

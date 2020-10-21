@@ -48,6 +48,22 @@
        </td>
       
     </tr>
+    <!-- user info 3列目-->
+    <tr>
+      <th class="bg-dark text-center text-white">
+        <%= User.human_attribute_name :employee_number %>
+      </th>
+       <td colspan="3" class="text-center">
+        <%= @user.employee_number.present?? @user.employee_number : '未登録' %>
+      </td>
+       <th class="bg-dark text-center text-white">
+        <%= User.human_attribute_name :uid %>
+       </th>
+       <td colspan="3" class="text-center">
+        <%= @user.uid.present?? @user.uid : '未登録' %>
+       </td>
+      
+    </tr>
   </tbody>    
 </table>
 <div class="border-top"></div>

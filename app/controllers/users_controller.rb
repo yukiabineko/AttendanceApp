@@ -47,7 +47,8 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_parameter)
-      redirect_to @user, notice: "#{@user.name}を編集しました。"
+      flash[:notice] = "#{@user.name}を編集しました。"
+      current_user.admin? ? (redirect_to root_url) : (redirect_to @user)
     else  
       render :edit
     end
@@ -86,7 +87,9 @@ private
       :password_confirmation, 
       :department, 
       :start_work_time,
-      :finish_work_time
+      :finish_work_time,
+      :employee_number,
+      :uid
     )
   end
 
