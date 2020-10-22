@@ -1,6 +1,18 @@
-<div class="text-center mt-5 mb-5"><h1>会員一覧</h1></div>
+<div class="text-center mt-5 mb-5 mb-3"><h1>会員一覧</h1></div>
+<div class="border-bottom row">
+<div class="col-md-6">
+ <%= link_to '新規登録', new_user_path, class:"btn btn-primary" %></p>
+  <div class="input-group">
+    <label class="input-group-btn">
+        <span class="btn btn-secondary">
+            ファイル選択<input type="file" style="display:none">
+        </span>
+    </label>
+    <input type="text" class="form-control" readonly="">
+</div>
+</div>
+</div>
 
-<%= link_to '新規登録', new_user_path, class:"btn btn-primary mb-3" %>
 <% if @users.count >0 %>
   <table class="table index-table" >
     <tbody>
@@ -11,4 +23,21 @@
   <div class="p-5 bg-secondary text-center text-white">データありません</div>
 <% end %>
 
+<script>
+$(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.parent().parent().next(':text').val(label);
 
+    var files = !!this.files ? this.files : [];
+    if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+    if (/^image/.test( files[0].type)){ // only image file
+        var reader = new FileReader(); // instance of the FileReader
+        reader.readAsDataURL(files[0]); // read the local file
+        reader.onloadend = function(){ // set image data as background of div
+            input.parent().parent().parent().prev('.imagePreview').css("background-image", "url("+this.result+")");
+        }
+    }
+});
+</script>
