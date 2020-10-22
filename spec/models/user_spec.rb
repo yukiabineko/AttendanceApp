@@ -156,9 +156,9 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("パスワード確認とパスワードの入力が一致しません")
       end
     end
-
-
   end
+
+  
 
   
 end

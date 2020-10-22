@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get :info_edit
       patch :info_update
     end
-    
+    post :import, on: :collection
   end
 
   resources :attendances, only:[:show] do

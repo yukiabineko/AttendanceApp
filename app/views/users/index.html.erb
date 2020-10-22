@@ -2,14 +2,17 @@
 <div class="border-bottom row">
 <div class="col-md-6">
  <%= link_to '新規登録', new_user_path, class:"btn btn-primary" %></p>
+ <%= form_with url: import_users_path, local:true do |f| %>
   <div class="input-group">
     <label class="input-group-btn">
         <span class="btn btn-secondary">
-            ファイル選択<input type="file" style="display:none">
+            ファイル選択<%= f.file_field :csv_file, style:"display:none" %>
         </span>
     </label>
     <input type="text" class="form-control" readonly="">
-</div>
+  </div>
+  <%= f.submit 'インポート', class: 'btn btn-primary btn-block mb-3' %>
+  <% end %>
 </div>
 </div>
 

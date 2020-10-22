@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  require 'csv'
   has_secure_password
   has_many :attendances, dependent: :destroy
   validates :name, presence: true
@@ -40,6 +41,7 @@ class User < ApplicationRecord
       return ''
     end
   end
+
   
 
   
