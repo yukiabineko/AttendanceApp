@@ -73,10 +73,27 @@
   <li class="time-list"><%= l(@first_day, format: :month) %></li>
   <li class="time-list"><%= link_to "→", user_path(@user, params:{first_day: @first_day.next_month}), class: 'btn btn-primary' %></li>
 </ul>
-<%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
+
+<div>
+  <% if @user.superior %>
+    <span>[所属長承認申請のお知らせ]</span><br/>
+    <span>[残業申請承認申請のお知らせ]</span><br/>
+    <span>[勤怠変更申請のお知らせ]</span><br/>
+　<% end %>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-3">
+    <%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
+    <%=link_to 'CSV出力', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
+    <%=link_to '勤怠ログ', "#", class: 'btn btn-primary btn-block' %>
+  </div>
+</div>
+
 <table class="table table-bordered">
   <thead>
     <tr>
+      <th rowspan="2" class="bg-light text-center align-middle">残業申請</th>
       <th rowspan="2" class="bg-light text-center align-middle">日付</th>
       <th rowspan="2" class="bg-light text-center align-middle">曜日</th>
       <th colspan="3" class="bg-light text-center">出勤時間</th>
@@ -97,6 +114,9 @@
   <tbody>
     <% @days.each do |day| %>
       <tr>
+        <td class="text-center">
+          <%= link_to '残業申請', "#", class: 'btn btn-primary'%>
+        </td>
         <td class="text-center"><%= l(day.worked_on, format: :short) %></td>
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
         <td class="text-center"><%= l(day.started_at, format: :hour) if day.started_at.present?  %></td>
