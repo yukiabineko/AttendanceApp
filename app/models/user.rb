@@ -42,7 +42,30 @@ class User < ApplicationRecord
     end
   end
 
-  
+  #csvインポート
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      attendance = find_by(id: row["id"]) || new
+      attendance.attributes = row.to_hash.slice(*updatable_attributes)
+      attendance.save!
+    end
+  end
+
+  #csvキー配列
+  def self.updatable_attributes
+    [
+      'name', 
+      'email', 
+      'password', 
+      'password_confirmation', 
+      'start_work_time', 
+      'finish_work_time',
+      'department',
+      'employee_number',
+      'uid',
+      'superior'
+    ]
+  end
 
   
   

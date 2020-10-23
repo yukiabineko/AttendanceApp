@@ -79,14 +79,13 @@ class UsersController < ApplicationController
 #csvにてインポート
   def import
     @users = User.all
-    CSV.foreach(params[:csv_file].path, headers: true) do |row|
+    CSV.foreach(params[:file].path, headers: true) do |row|
       user = User.find_by(id: row["id"]) || User.new
       user.attributes = row.to_hash.slice(*updatable_attributes)
       user.save!
     end
-  
     respond_to do |format|
-      flash.now[:notice] ='インポートしました。'
+      flash.now[:notice] = "インポートしました。"
       format.html { render :index }
     end
   end
@@ -127,8 +126,7 @@ private
      end
    end
   
-   #csvキー配列
-  def updatable_attributes
+   def updatable_attributes
     [
       'name', 
       'email', 

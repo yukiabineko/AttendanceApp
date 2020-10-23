@@ -21,15 +21,5 @@ describe "users", type: :system do
       fill_in "session[password]",	with: "123" 
       click_button "ログイン"
   end
-  describe "csv import" do
-   
-    let(:csv_file) { 'test.csv' }
-
-    it 'success' do
-      post :import, params: {
-        csv_file: fixture_file_upload(csv_file, 'text/csv')
-      }
-      expect(response).to be_successful
-    end
-  end
+  
 end
