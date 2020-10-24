@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users do
-    resources :attendances, param: :worked_on, only:[:edit, :update] #->勤怠編集画面
+    resources :attendances, param: :worked_on, only:[:edit, :update]  #->勤怠編集画面
     member do
       get :info_edit
       patch :info_update
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   end
 
   resources :attendances, only:[:show] do
+    resources :users do
+      get :overtime_modal_open, on: :member
+    end
+
     member do
       post :set_time
     end

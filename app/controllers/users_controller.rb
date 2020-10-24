@@ -90,6 +90,11 @@ class UsersController < ApplicationController
     end
   end
   
+  #残業申請ボタン押しした時モーダル
+  def overtime_modal_open
+    
+  end
+  
 
 
 private

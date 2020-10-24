@@ -1,6 +1,6 @@
 <tr>
   <td style="border:none;" class="pb-n5">
-    <%= user.name %>
+    <%=link_to user.name, user_path(user), class:'font-weight-bold text-dark h6'%>
     <% unless user.admin %>
       <p></p>
       |<%= link_to "削除", user_path(user), method: :delete, id: "del#{user.id}", data:{confirm:"削除しますか？"}, class: "btn btn-primary" unless user.admin? %></td>
