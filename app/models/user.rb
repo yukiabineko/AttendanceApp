@@ -66,7 +66,8 @@ class User < ApplicationRecord
       'superior'
     ]
   end
-
+#上長ユーザー
+scope :superior_select, -> { where(:superior => true)}
   
   
   

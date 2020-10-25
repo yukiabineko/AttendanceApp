@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     if params[:first_day].nil?
       @first_day = Date.today.beginning_of_month
     else
-      @first_day = Date.parse( params[:first_day])
+      @first_day = Date.parse( params[:first_day]).beginning_of_month
     end
    
     @last_day = @first_day.end_of_month
@@ -92,6 +92,9 @@ class UsersController < ApplicationController
   
   #残業申請ボタン押しした時モーダル
   def overtime_modal_open
+    @attendance = Attendance.find( params[:attendance_id] )
+    @week = %w(日 月 火 水 木 金 土)
+    @superior_name = superior_name  #=>ヘルパーメゾット
     
   end
   

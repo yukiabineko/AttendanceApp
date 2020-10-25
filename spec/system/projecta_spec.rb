@@ -27,7 +27,22 @@ describe "users", type: :system do
       fill_in "session[email]",	with: "abi@example.com" 
       fill_in "session[password]",	with: "123" 
       click_button "ログイン"
+
+      @first = Date.today.beginning_of_month
+      @last = @first.end_of_month
+      (@first .. @last).each do |day|
+        unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+          record = @user.attendances.build(worked_on: day)
+          record.save
+        end
+      end
+    @attendance = @user.attendances.first
   end
+  
+
+
+
+
   #上長であるかでviewの分岐テスト
   describe "superior area check" do
     context "not superior" do
@@ -48,11 +63,38 @@ describe "users", type: :system do
         visit user_url @user
         expect(page).to  have_content '[所属長承認申請のお知らせ]'
       end
+    end
+  end
+
+  #残業申請処理(申請者側)
+  describe "overtime",js:true do
+    
+    it "work_content null" do
+      expect(@attendance.work_contents).to eq nil
+    end
+
+    context "overtime modal view" do
+      before do
+        visit user_path(@user)
+        click_on "overtime#{@attendance.id}"
+      end
+      #モーダル内の日確認
+      it "day view" do
+        expect(page).to have_content @attendance.worked_on.strftime('%m/%d') 
+      end
       
+       #モーダル内入力による更新
+      it "update" do
+        fill_in "attendance[work_contents]",	with: "掃除" 
+        click_button '申請する'
+        expect(page).to have_content '掃除'
+      end
     end
     
     
+    
   end
+  
   
   
 end
