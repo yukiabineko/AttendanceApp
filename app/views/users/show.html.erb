@@ -130,7 +130,7 @@
     <% @days.each do |day| %>
       <tr>
         <td class="text-center">
-          <%= link_to '残業申請', overtime_modal_open_attendance_user_path(day,@user), remote: true, class: 'btn btn-primary'%>
+          <%= link_to '残業申請', overtime_modal_open_attendance_users_path(day), id: "overtime#{day.id}", remote: true, class: 'btn btn-primary'%>
         </td>
         <td class="text-center"><%= l(day.worked_on, format: :short) %></td>
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
@@ -154,11 +154,11 @@
          <% end %>
         </td>
         <td class="text-center"><%= day.note %></td>
+        <td class="text-center"><%= l(day.overtime, format: :hour) if day.overtime.present?  %></td>
+        <td class="text-center"><%= l(day.overtime, format: :min) if day.overtime.present?  %></td>
         <td class="text-center"></td>
-        <td class="text-center"></td>
-        <td class="text-center"></td>
-        <td class="text-center"></td>
-        <td class="text-center"></td>
+        <td class="text-center"><%= day.work_contents %></td>
+        <td class="text-center"><%= day.superior_name %></td>
       </tr>
     <% end %>
   </tbody>

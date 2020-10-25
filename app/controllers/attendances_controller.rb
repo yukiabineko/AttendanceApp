@@ -40,9 +40,29 @@ class AttendancesController < ApplicationController
     redirect_to user_path(@attendance.user),notice: message
   end
 
+  #残業申請処理
+  def overtime_update
+    @attendance = Attendance.find( params[:id] )
+    @attendance.update_attributes(overtime_parameter)
+    redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on})
+  end
+  
+
+
+
+
 private
   def attendance_parameter
     params.require(:user).permit(attendances:[:started_at, :finished_at, :note])[:attendances]
+  end
+
+  def overtime_parameter
+    params.require(:attendance).permit(
+      :overtime,
+      :tommorow_check,
+      :work_contents,
+      :superior_name
+    )
   end
 
   def setting
