@@ -3,7 +3,10 @@ module UsersHelper
     superior_users = User.superior_select
     array =[]
     superior_users.each do |superior|
-      array.push(superior.name)
+      unless current_user.name == superior.name
+        array.push(superior.name)
+      end 
+     
     end
     return array
   end

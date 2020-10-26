@@ -34,9 +34,18 @@ describe "users", type: :system do
         unless @user.attendances.any?{|attendance| attendance.worked_on == day}
           record = @user.attendances.build(worked_on: day)
           record.save
+
+          record2 = @user2.attendances.build(worked_on: day)
+          record2.save
+
+          record3 = @user3.attendances.build(worked_on: day)
+          record3.save
+
         end
       end
     @attendance = @user.attendances.first
+    @attendance2 = @user2.attendances.first
+    @attendance3 = @user3.attendances.first
   end
   
 
@@ -90,9 +99,24 @@ describe "users", type: :system do
         expect(page).to have_content '掃除'
       end
     end
+
+      #上長残業申請情報表示
+    context "superior request info view" do
+      before do
+        @attendance3.update_attributes(superior_name: @user3.name)
+        visit login_path
+        fill_in "session[email]",	with: "pico@example.com" 
+        fill_in "session[password]",	with: "123" 
+        click_button "ログイン"
+      end
+        #残業申請１件表示
+        it "request info view success" do
+          expect(page).to have_content "[残業申請承認申請のお知らせ] 1件の残業申請があります。"
+        end
+    end
     
     
-    
+
   end
   
   

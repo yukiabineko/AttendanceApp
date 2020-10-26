@@ -1,6 +1,6 @@
 #既存のプロジェクトのrubyのバージョンを指定
 FROM ruby:2.5.7
-
+ENV LANG C.UTF-8
 #パッケージの取得
 RUN apt-get update && apt-get install -y --no-install-recommends  \
     nodejs  \

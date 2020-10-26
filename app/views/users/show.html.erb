@@ -80,7 +80,12 @@
 <div>
   <% if @user.superior %>
     <span>[所属長承認申請のお知らせ]</span><br/>
-    <span>[残業申請承認申請のお知らせ]</span><br/>
+
+    <span class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
+      [残業申請承認申請のお知らせ]
+      <%= "#{@overtime_request_count}件の残業申請があります。" if @overtime_request_count>0 %>
+    </span><br/>
+
     <span>[勤怠変更申請のお知らせ]</span><br/>
 　<% end %>
 </div>
@@ -181,6 +186,14 @@
 .time-list{
   display: inline;
   margin-right:20%;
+}
+.over_time_nil{
+  color: black;
+  font-weight: bold;
+}
+.over_time_present{
+  color: red;
+  font-weight: bold;
 }
 
 </style>

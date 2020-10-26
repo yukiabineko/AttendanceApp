@@ -68,7 +68,13 @@ class User < ApplicationRecord
   end
 #上長ユーザー
 scope :superior_select, -> { where(:superior => true)}
-  
+ 
+#申請済みattendance数
+
+def superior_request_count
+  counts = Attendance.where(superior_name: self.name).count
+  return counts ==0? 0 : counts
+end
   
   
 end
