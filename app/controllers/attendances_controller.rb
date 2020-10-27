@@ -43,7 +43,12 @@ class AttendancesController < ApplicationController
   #残業申請処理
   def overtime_update
     @attendance = Attendance.find( params[:id] )
-    @attendance.update_attributes(overtime_parameter)
+    if params[:attendance][:tommorow_check] == '1'
+      @tomorrow_attendance = @attendance.user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
+      @tomorrow_attendance.update_attributes(overtime_parameter)
+    else  
+      @attendance.update_attributes(overtime_parameter)
+    end
     redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on})
   end
   
