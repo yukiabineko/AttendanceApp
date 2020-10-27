@@ -49,9 +49,6 @@ describe "users", type: :system do
   end
   
 
-
-
-
   #上長であるかでviewの分岐テスト
   describe "superior area check" do
     context "not superior" do
@@ -92,11 +89,14 @@ describe "users", type: :system do
         expect(page).to have_content @attendance.worked_on.strftime('%m/%d') 
       end
       
-       #モーダル内入力による更新
+       #モーダル内入力による更新明日の日付選択
       it "update" do
         fill_in "attendance[work_contents]",	with: "掃除" 
+        check
         click_button '申請する'
+        tomorrow = @user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
         expect(page).to have_content '掃除'
+        expect(tomorrow.work_contents).to eq "掃除" 
       end
     end
 
