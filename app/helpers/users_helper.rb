@@ -10,4 +10,12 @@ module UsersHelper
     end
     return array
   end
+  #申請中ユーザー名
+  def request_user_name
+    names = []
+    @request_attendances.each do |attendance|
+      names << attendance.user
+    end
+    return names.uniq
+  end
 end

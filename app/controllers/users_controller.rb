@@ -102,7 +102,9 @@ class UsersController < ApplicationController
   #残業申請上長許可処理
   def overtime_confirm_modal
     @user = User.find( params[:id] )
+    @week = %w(日 月 火 水 木 金 土)
     @request_attendances = Attendance.user_request(@user)
+    @request_users = request_user_name       #=>helperより
   end
   
   
@@ -157,6 +159,7 @@ private
       'superior'
     ]
   end
+  
   
   
   
