@@ -9,9 +9,11 @@ Rails.application.routes.draw do
     member do
       get :info_edit
       patch :info_update
+      get :overtime_confirm_modal
      
     end
     post :import, on: :collection
+    
    
   end
 

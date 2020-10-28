@@ -1,6 +1,6 @@
 <div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}詳細" %></h1></div>
 <div id="over_time" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-
+<div id="over_time_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 
 <table class="table table-bordered">
@@ -83,7 +83,7 @@
 
     <span class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [残業申請承認申請のお知らせ]
-      <%= "#{@overtime_request_count}件の残業申請があります。" if @overtime_request_count>0 %>
+      <%= link_to "#{@overtime_request_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user), remote: true, class:"user_request" if @overtime_request_count>0 %>
     </span><br/>
 
     <span>[勤怠変更申請のお知らせ]</span><br/>
@@ -195,5 +195,12 @@
   color: red;
   font-weight: bold;
 }
-
+.user_request{
+  color: red;
+  border: 1px solid red;
+  text-decoration: none;
+}
+.user_request:hover{
+  text-decoration: none;
+}
 </style>

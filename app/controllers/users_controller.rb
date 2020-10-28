@@ -99,6 +99,14 @@ class UsersController < ApplicationController
     
   end
   
+  #残業申請上長許可処理
+  def overtime_confirm_modal
+    @user = User.find( params[:id] )
+    @request_attendances = Attendance.user_request(@user)
+  end
+  
+  
+  
 
 
 private
