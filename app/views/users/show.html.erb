@@ -171,7 +171,7 @@
         <td class="text-center"><%= l(day.overtime, format: :min) if day.overtime.present?  %></td>
         <td class="text-center"></td>
         <td class="text-center"><%= day.work_contents %></td>
-        <td class="text-center"><%= day.superior_name %></td>
+        <td class="text-center" style="font-size:12px;"><%= day.enum_check %></td>
       </tr>
     <% end %>
   </tbody>

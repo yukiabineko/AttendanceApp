@@ -1,7 +1,6 @@
 class Attendance < ApplicationRecord
   belongs_to :user
   enum permit:{
-    non: 0,
     inprogress: 1,
     ok: 2,
     not: 3
@@ -46,7 +45,20 @@ class Attendance < ApplicationRecord
   #残業申請されているattendance
   scope :user_request, ->(user) { where(superior_name: user.name)}
   
-  
+  #enumによる分岐
+  def enum_check
+    case self.permit
+    when 0
+      return ''
+    when "inprogress"
+      return "#{self.superior_name}に申請中" if self.superior_name.present?
+    when 'ok'
+      return "#{self.superior_name}から承認済み" if self.superior_name.present?
+    when 'not'
+      return "#{self.superior_name}から否認済み" if self.superior_name.present?
+    else
+    end  
+  end
   
  
 end

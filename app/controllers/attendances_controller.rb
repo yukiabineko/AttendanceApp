@@ -24,6 +24,11 @@ class AttendancesController < ApplicationController
       render :edit
     end  
   end
+
+  #上長申請返信処理
+  def permit_request
+    debugger
+  end
   
   
 
@@ -66,7 +71,9 @@ private
       :overtime,
       :tommorow_check,
       :work_contents,
-      :superior_name
+      :superior_name,
+      :change,
+      :permit
     )
   end
 

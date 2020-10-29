@@ -29,6 +29,7 @@
               <td><%= f.check_box  :tommorow_check, class:'form-control' %></td>
               <td><%= f.text_field  :work_contents, class:'form-control' %></td>
               <td><%= f.select :superior_name, @superior_name, {},class: 'form-control' %></td>
+              <%= f.hidden_field :permit, value: :inprogress %>
             </tr>
           </tbody>
         </table>

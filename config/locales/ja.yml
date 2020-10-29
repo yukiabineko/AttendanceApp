@@ -1,5 +1,12 @@
 ---
 ja:
+  enums:
+    attendance:
+      permit:
+        non: ''
+        inprogress: 申請中
+        ok: 承認済み
+        not: 否認済み
   activerecord:
     errors:
       messages:
@@ -7,13 +14,7 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
-    enums:
-      attendance:
-        permit:
-          non: ''
-          inprogress: 申請中
-          ok: 承認済み
-          not: 否認済み
+ 
     models:
       user: ユーザー
     attributes:
@@ -233,3 +234,4 @@ ja:
       hour: "%H"
       min: "%M"
     pm: 午後
+    

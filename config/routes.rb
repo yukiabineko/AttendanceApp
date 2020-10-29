@@ -13,6 +13,7 @@ Rails.application.routes.draw do
      
     end
     post :import, on: :collection
+  
     
    
   end
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
       post :set_time
       patch :overtime_update    #=>残業申請アップデート
     end
+    patch :permit_request, on: :collection          #=>上長申請返信
   end
   root 'users#index'
 end
