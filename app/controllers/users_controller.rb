@@ -135,11 +135,11 @@ private
     redirect_to current_user,notice: '管理者専用です。' unless current_user.admin?
   end
 
-   #管理者以外URLで他のユーザーのページアクセス禁止
+   #管理者、上長以外URLで他のユーザーのページアクセス禁止
    def other_user_access
     user  = User.find( params[:id])
      if  user.id  != current_user.id
-      unless current_user.admin?
+      unless (current_user.admin? || current_user.superior)
         redirect_to current_user,notice: '不正な操作です。'
       end
      end
