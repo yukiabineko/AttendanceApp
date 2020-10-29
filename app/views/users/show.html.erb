@@ -71,11 +71,13 @@
 </table>
 <div class="border-top"></div>
 <div class="text-center mb-5 mt-2">勤怠管理表</div>
-<ul class="time-ul">
-  <li class="time-list"><%= link_to "←", user_path(@user, params:{first_day: @first_day.prev_month}), class: 'btn btn-primary' %></li>
-  <li class="time-list"><%= l(@first_day, format: :month) %></li>
-  <li class="time-list"><%= link_to "→", user_path(@user, params:{first_day: @first_day.next_month}), class: 'btn btn-primary' %></li>
-</ul>
+<% if @user == current_user || current_user.admin? %>
+  <ul class="time-ul">
+    <li class="time-list"><%= link_to "←", user_path(@user, params:{first_day: @first_day.prev_month}), class: 'btn btn-primary' %></li>
+    <li class="time-list"><%= l(@first_day, format: :month) %></li>
+    <li class="time-list"><%= link_to "→", user_path(@user, params:{first_day: @first_day.next_month}), class: 'btn btn-primary' %></li>
+  </ul>
+<% end %>
 
 <div>
   <% if @user.superior %>
@@ -92,16 +94,20 @@
 
 <div class="row mt-5">
   <div class="col-md-3">
+  <% if @user == current_user || current_user.admin  %>
     <%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
     <%=link_to 'CSV出力', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
     <%=link_to '勤怠ログ', "#", class: 'btn btn-primary btn-block' %>
+  <% end %>
   </div>
 </div>
 
 <table class="table table-bordered">
   <thead>
     <tr>
+     <% if @user == current_user %>
       <th rowspan="3" class="bg-light text-center align-middle">残業申請</th>
+     <% end %>
       <th rowspan="3" class="bg-light text-center align-middle">日付</th>
       <th rowspan="3" class="bg-light text-center align-middle">曜日</th>
       <th colspan="6" class="bg-light text-center align-middle">[実績]</th>
@@ -134,22 +140,24 @@
   <tbody>
     <% @days.each do |day| %>
       <tr>
-        <td class="text-center">
-          <%= link_to '残業申請', overtime_modal_open_attendance_users_path(day), id: "overtime#{day.id}", remote: true, class: 'btn btn-primary'%>
-        </td>
+        <% if @user == current_user %>
+          <td class="text-center">
+            <%= link_to '残業申請', overtime_modal_open_attendance_users_path(day), id: "overtime#{day.id}", remote: true, class: 'btn btn-primary'%>
+          </td>
+        <% end %>
         <td class="text-center"><%= l(day.worked_on, format: :short) %></td>
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
         <td class="text-center"><%= l(day.started_at, format: :hour) if day.started_at.present?  %></td>
         <td class="text-center"><%= l(day.started_at, format: :min) if day.started_at.present?  %></td>
         <td class="text-center">
-          <% if day.started_at.nil? && day.worked_on == Date.today %>
+          <% if day.started_at.nil? && day.worked_on == Date.today && @user == current_user %>
             <%= button_to '出勤',set_time_attendance_path(day), class: 'btn btn-primary btn-block' %>
           <% end %>
         </td>
         <td class="text-center"><%= l(day.finished_at, format: :hour) if day.finished_at.present?  %></td>
         <td class="text-center"><%= l(day.finished_at, format: :min) if day.finished_at.present?  %></td>
         <td class="text-center">
-          <% if day.finished_at.nil? && day.started_at.present? && day.worked_on == Date.today %>
+          <% if day.finished_at.nil? && day.started_at.present? && day.worked_on == Date.today && @user == current_user %>
              <%= button_to '退勤',set_time_attendance_path(day), class: 'btn btn-primary btn-block' %>
           <% end %>
         </td>

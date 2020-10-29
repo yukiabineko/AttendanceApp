@@ -1,5 +1,11 @@
 class Attendance < ApplicationRecord
   belongs_to :user
+  enum permit:{
+    non: 0,
+    inprogress: 1,
+    ok: 2,
+    not: 3
+  }
 
   #出勤時間
 
