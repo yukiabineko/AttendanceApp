@@ -27,7 +27,14 @@ class AttendancesController < ApplicationController
 
   #上長申請返信処理
   def permit_request
-    debugger
+    user = User.find( params[:id] )
+    attendance_parameter.each do |id, item|
+      if item[:change] == '1'
+        attendance = Attendance.find id
+        attendance.update_attributes(item)
+      end
+    end
+    redirect_to user_url(@user, params:{first_day: params[:day]})
   end
   
   
@@ -63,7 +70,16 @@ class AttendancesController < ApplicationController
 
 private
   def attendance_parameter
-    params.require(:user).permit(attendances:[:started_at, :finished_at, :note])[:attendances]
+    params.require(:user).permit(attendances:
+      [
+        :started_at, 
+        :finished_at, 
+        :note,
+        :superior_name,
+        :change,
+        :permit
+      ]
+      )[:attendances]
   end
 
   def overtime_parameter

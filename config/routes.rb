@@ -26,8 +26,9 @@ Rails.application.routes.draw do
     member do
       post :set_time
       patch :overtime_update    #=>残業申請アップデート
+      patch :permit_request         #=>上長申請返信
     end
-    patch :permit_request, on: :collection          #=>上長申請返信
+    
   end
   root 'users#index'
 end

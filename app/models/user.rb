@@ -72,13 +72,13 @@ scope :superior_select, -> { where(:superior => true)}
 #申請済みattendance数
 
 def superior_request_count
-  counts = Attendance.where(superior_name: self.name).count
+  counts = Attendance.where(superior_name: self.name).where(permit: :inprogress).count
   return counts ==0? 0 : counts
 end
 
 #上長名で検索
 def request_record(name)
-  self.attendances.where(superior_name: name)
+  self.attendances.where(superior_name: name).where(permit: :inprogress)
 end
   
   

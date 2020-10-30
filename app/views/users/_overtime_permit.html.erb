@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-         <%= form_with model: @user, url: permit_request_attendances_path, local: true,  method: :patch do |f| %>
+         <%= form_with model: @user, url: permit_request_attendance_path(@user,params:{day: params[:day]}), local: true,  method: :patch do |f| %>
        <% @request_users.each do |user| %>
         <div class="text-center mb-3"><h5><%= "[#{user.name}からの残業申請]" %></h5></div>
           <table class="table table-bordered" style="font-size:12px">
@@ -38,7 +38,8 @@
                     </td> 
                     <td><%= attendance.work_contents %></td>
                     <td><%= af.select :permit, Attendance.permits.keys.map {|k| [I18n.t("enums.attendance.permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %></td>
-                    <td><%= af.check_box :id %></td>
+                    <td><%= af.check_box :change %></td>
+                    
                     <td><%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary' %></td>
                 </tr>
 

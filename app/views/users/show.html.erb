@@ -85,7 +85,7 @@
 
     <span class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [残業申請承認申請のお知らせ]
-      <%= link_to "#{@overtime_request_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user), remote: true, class:"user_request" if @overtime_request_count>0 %>
+      <%= link_to "#{@overtime_request_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @overtime_request_count>0 %>
     </span><br/>
 
     <span>[勤怠変更申請のお知らせ]</span><br/>
@@ -171,7 +171,7 @@
         <td class="text-center"><%= l(day.overtime, format: :min) if day.overtime.present?  %></td>
         <td class="text-center"></td>
         <td class="text-center"><%= day.work_contents %></td>
-        <td class="text-center" style="font-size:12px;"><%= day.enum_check %></td>
+        <td class="text-center permit-<%=day.permit %>" style="font-size:12px;"><%= day.enum_check %></td>
       </tr>
     <% end %>
   </tbody>
@@ -210,5 +210,17 @@
 }
 .user_request:hover{
   text-decoration: none;
+}
+.permit-inprogress{
+  color:black;
+  font-weight:bold;
+}
+.permit-ok{
+  color:blue;
+  font-weight:bold;
+}
+.permit-not{
+  color:red;
+  font-weight:bold;
 }
 </style>
