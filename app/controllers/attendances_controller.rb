@@ -5,6 +5,7 @@ class AttendancesController < ApplicationController
   end
 
   def edit
+    @superior_name = superior_name
   end
 
 

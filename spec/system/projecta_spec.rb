@@ -104,7 +104,7 @@ describe "users", type: :system do
         tomorrow = @user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
         expect(page).to have_content '掃除'
         expect(tomorrow.work_contents).to eq "掃除" 
-        expect(page).to  have_content 'picoに申請中'
+        expect(page).to  have_content 'picoに残業申請中'
       end
       
 
@@ -139,7 +139,7 @@ describe "users", type: :system do
           fill_in "session[email]",	with: "cat@example.com" 
           fill_in "session[password]",	with: "123" 
           click_button "ログイン"
-          expect(page).to  have_content 'picoから承認済み'
+          expect(page).to  have_content 'picoから残業承認済み'
         end
         
     end

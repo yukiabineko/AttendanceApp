@@ -14,7 +14,8 @@
       <th class="bg-light text-center">出勤時間</th>
       <th class="bg-light text-center">退勤時間</th>
       <th class="bg-light text-center align-middle">合計時間</th>
-      <th class="bg-light text-center align-middle">メモ</th>
+      <th class="bg-light text-center align-middle">備考</th>
+      <th class="bg-light text-center align-middle">指示者確認㊞</th>
     </tr>
     
   </thead>
@@ -24,10 +25,11 @@
       <tr>
         <td class="text-center"><%= l(day.worked_on, format: :short)  %></td>
         <td class="text-center"><%= @week[day.worked_on.wday] %></td>
-        <td><%= af.time_field :started_at, class:'form-control' if day.worked_on < Date.today %></td>
-        <td><%= af.time_field :finished_at, class:'form-control' if day.worked_on < Date.today %></td>
+        <td><%= af.time_field :request_startedtime, class:'form-control' if day.worked_on < Date.today %></td>
+        <td><%= af.time_field :request_finishedtime, class:'form-control' if day.worked_on < Date.today %></td>
         <td></td>
         <td><%= af.text_field :note, class:'form-control' if day.worked_on < Date.today %></td>
+        <td><%= af.select :edit_superior_name, @superior_name, {}, class:'form-control' %></td>
       </tr>
       <% end %>
     <% end %>

@@ -142,7 +142,9 @@
       <tr>
         <% if @user == current_user %>
           <td class="text-center">
-            <%= link_to '残業申請', overtime_modal_open_attendance_users_path(day), id: "overtime#{day.id}", remote: true, class: 'btn btn-primary'%>
+            <%= link_to '残業申請', overtime_modal_open_attendance_users_path(day), 
+            id: "overtime#{day.id}", 
+            remote: true, class: "#{day.finished_at.present?? '' : 'disabled'} btn btn-primary"%>
           </td>
         <% end %>
         <td class="text-center"><%= l(day.worked_on, format: :short) %></td>

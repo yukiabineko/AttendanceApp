@@ -51,11 +51,11 @@ class Attendance < ApplicationRecord
     when 0
       return ''
     when "inprogress"
-      return "#{self.superior_name}に申請中" if self.superior_name.present?
+      return "#{self.superior_name}に残業申請中" if self.superior_name.present?
     when 'ok'
-      return "#{self.superior_name}から承認済み" if self.superior_name.present?
+      return "#{self.superior_name}から残業承認済み" if self.superior_name.present?
     when 'not'
-      return "#{self.superior_name}から否認済み" if self.superior_name.present?
+      return "#{self.superior_name}から残業否認済み" if self.superior_name.present?
     else
     end  
   end
