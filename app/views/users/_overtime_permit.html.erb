@@ -6,50 +6,53 @@
         </button>
          <%= form_with model: @user, url: permit_request_attendance_path(@user,params:{day: params[:day]}), local: true,  method: :patch do |f| %>
        <% @request_users.each do |user| %>
-        <div class="text-center mb-3"><h5><%= "[#{user.name}からの残業申請]" %></h5></div>
-          <table class="table table-bordered" style="font-size:12px">
-            <thead>
-              <th class="text-center">日付</th>
-              <th class="text-center">曜日</th>
-              <th class="text-center">終了予定時間</th>
-              <th class="text-center">指定勤務時間</th>
-              <th class="text-center">時間外時間</th>
-              <th class="text-center">業務処理内容</th>
-              <th class="text-center">指示者確認㊞</th>
-              <th class="text-center">変更</th>
-              <th class="text-center">勤怠を確認する</th>
-            </thead>
-            <tbody class="bg-light text-center">
-              <% user.request_record(@user.name).each do |attendance| %>
-　　　　　　　　　 <%= f.fields_for "attendances[]", attendance do |af| %>
-                <tr>
-                    <td class="text-center"><%= l(attendance.worked_on, format: :short) %></td> 
-                    <td class="text-center"><%= @week[attendance.worked_on.wday] %></td> 
-                    <td class="text-center">
-                      <%= l(attendance.overtime, format: :hour) + ":" + l(attendance.overtime, format: :min)  if attendance.overtime.present? %>
-                    </td> 
-                    <td class="text-center">
-                      <%=  attendance.user.finish_work_time%>
-                    </td> 
-                    <td class="text-center">
-                      <% if attendance.overtime.present? &&  attendance.user.finish_work_time.present? %>
-                        <%=  overtime(attendance) %>
-                      <% end %>
-                    </td> 
-                    <td><%= attendance.work_contents %></td>
-                    <td><%= af.select :permit, Attendance.permits.keys.map {|k| [I18n.t("enums.attendance.permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %></td>
-                    <td><%= af.check_box :change %></td>
-                    
-                    <td><%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary' %></td>
-                </tr>
+        <% if user.request_record(@user.name).count >0 %>
+          <div class="text-center mb-3"><h5><%= "[#{user.name}からの残業申請]" %></h5></div>
+            <table class="table table-bordered" style="font-size:12px">
+              <thead>
+                <th class="text-center">日付</th>
+                <th class="text-center">曜日</th>
+                <th class="text-center">終了予定時間</th>
+                <th class="text-center">指定勤務時間</th>
+                <th class="text-center">時間外時間</th>
+                <th class="text-center">業務処理内容</th>
+                <th class="text-center">指示者確認㊞</th>
+                <th class="text-center">変更</th>
+                <th class="text-center">勤怠を確認する</th>
+              </thead>
+        
+              <tbody class="bg-light text-center">
+                <% user.request_record(@user.name).each do |attendance| %>
+  　　　　　　　　　 <%= f.fields_for "attendances[]", attendance do |af| %>
+                  <tr>
+                      <td class="text-center"><%= l(attendance.worked_on, format: :short) %></td> 
+                      <td class="text-center"><%= @week[attendance.worked_on.wday] %></td> 
+                      <td class="text-center">
+                        <%= l(attendance.overtime, format: :hour) + ":" + l(attendance.overtime, format: :min)  if attendance.overtime.present? %>
+                      </td> 
+                      <td class="text-center">
+                        <%=  attendance.user.finish_work_time%>
+                      </td> 
+                      <td class="text-center">
+                        <% if attendance.overtime.present? &&  attendance.user.finish_work_time.present? %>
+                          <%=  overtime(attendance) %>
+                        <% end %>
+                      </td> 
+                      <td><%= attendance.work_contents %></td>
+                      <td><%= af.select :permit, Attendance.permits.keys.map {|k| [I18n.t("enums.attendance.permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %></td>
+                      <td><%= af.check_box :change %></td>
+                      
+                      <td><%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary' %></td>
+                  </tr>
 
+                  <% end %>
                 <% end %>
-              <% end %>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
           <% end %>
-           <div class="text-center mt-5 pb-2"><%= f.submit "勤怠を変更する", class: "btn btn-primary btn-lg" %></div>
          <% end %>
+         <div class="text-center mt-5 pb-2"><%= f.submit "勤怠を変更する", class: "btn btn-primary btn-lg" %></div>
+        <% end %>  
       </div>
     </div>
   </div>

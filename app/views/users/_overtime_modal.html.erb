@@ -8,7 +8,8 @@
         <div class="text-center h3 mt-3">[残業申請]</div>
         <%= form_with model: @attendance, 
             url:overtime_update_attendance_path(@attendance), 
-            local: true, method: :patch do |f| 
+            local: true, 
+            method: :patch do |f| 
         %>
         <table class="table table-bordered mt-3">
           <thead>
@@ -25,7 +26,7 @@
             <tr>
               <td><%= l(@attendance.worked_on, format: :short) %></td>
               <td><%= @week[@attendance.worked_on.wday] %></td>
-              <td><%= f.time_field :overtime, class:'form-control' %></td>
+              <td><%= f.time_select :overtime, {}, class:'form-control tm' %></td>
               <td><%= f.check_box  :tommorow_check, class:'form-control' %></td>
               <td><%= f.text_field  :work_contents, class:'form-control' %></td>
               <td><%= f.select :superior_name, @superior_name, {},class: 'form-control' %></td>

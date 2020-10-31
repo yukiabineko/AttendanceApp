@@ -66,15 +66,20 @@ describe "users", type: :system do
         click_button "ログイン"
       end
       it "user1 success view" do
-        visit user_url @user
-        expect(page).to  have_content '[所属長承認申請のお知らせ]'
+        expect(page).to  have_content '[残業申請承認申請のお知らせ]'
       end
     end
   end
-
+##############################################################################################
   #残業申請処理(申請者側)
   describe "overtime",js:true do
-    
+    #出退勤入力
+    before do
+      @attendance.update_attributes(
+        started_at: "2020-03-04 01:00:00 +0900",
+        finished_at: "2020-03-04 09:00:00 +0900"
+      )
+    end
     it "work_content null" do
       expect(@attendance.work_contents).to eq nil
     end
@@ -92,18 +97,32 @@ describe "users", type: :system do
        #モーダル内入力による更新明日の日付選択
       it "update" do
         fill_in "attendance[work_contents]",	with: "掃除" 
+        select(value = "21", from: "attendance[overtime(4i)]") 
+        select(value = "00", from: "attendance[overtime(5i)]") 
         check
         click_button '申請する'
         tomorrow = @user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
         expect(page).to have_content '掃除'
         expect(tomorrow.work_contents).to eq "掃除" 
+        expect(page).to  have_content 'picoに申請中'
       end
+      
+
+       #残業時間不正入力チェック
+      it "check overtime" do
+         fill_in "attendance[work_contents]",	with: "掃除" 
+         select(value = "01", from: "attendance[overtime(4i)]") 
+         select(value = "00", from: "attendance[overtime(5i)]") 
+         click_button '申請する'
+         expect(page).to  have_content '終了時間が不正です。'
+      end
+      
     end
 
       #上長残業申請情報表示
     context "superior request info view" do
       before do
-        @attendance3.update_attributes(superior_name: @user3.name)
+        @attendance2.update_attributes(superior_name: @user3.name, permit: 1)
         visit login_path
         fill_in "session[email]",	with: "pico@example.com" 
         fill_in "session[password]",	with: "123" 
@@ -113,6 +132,16 @@ describe "users", type: :system do
         it "request info view success" do
           expect(page).to have_content "[残業申請承認申請のお知らせ] 1件の残業申請があります。"
         end
+        #変更にチェックいれ、承認を選択
+        it "superior action" do
+          @attendance2.update_attributes(change: true, permit: 2)
+          visit login_path
+          fill_in "session[email]",	with: "cat@example.com" 
+          fill_in "session[password]",	with: "123" 
+          click_button "ログイン"
+          expect(page).to  have_content 'picoから承認済み'
+        end
+        
     end
     
     

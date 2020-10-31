@@ -15,6 +15,18 @@ module AttendancesHelper
     return flag.include?(false) ? false : true
   end
 
+  #残業バリデーション計算　
+  def overtime_validation
+    finish_time = (@attendance.finished_at.hour.to_i * 60) + @attendance.finished_at.min.to_i
+    if params[:attendance]["overtime(1i)"].blank?
+      return true
+    end
+    overtime  = (params[:attendance]["overtime(4i)"].to_i) *60 + params[:attendance]["overtime(5i)"].to_i
+    comp = overtime - finish_time
+    return comp >= 0 ? true : false
+  end
+  
+
   #残業時間計算
   def overtime(attendance)
     plan = (attendance.overtime.hour.to_i * 60) + attendance.overtime.min.to_i  

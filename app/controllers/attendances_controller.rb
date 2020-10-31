@@ -55,13 +55,18 @@ class AttendancesController < ApplicationController
   #残業申請処理
   def overtime_update
     @attendance = Attendance.find( params[:id] )
-    if params[:attendance][:tommorow_check] == '1'
-      @tomorrow_attendance = @attendance.user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
-      @tomorrow_attendance.update_attributes(overtime_parameter)
-    else  
-      @attendance.update_attributes(overtime_parameter)
+    if overtime_validation == false
+      redirect_to user_url(@attendance.user, params:{first_day: @attendance.worked_on}), notice: '終了時間が不正です。'
+    else
+      if params[:attendance][:tommorow_check] == '1'
+        @tomorrow_attendance = @attendance.user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
+        @tomorrow_attendance.update_attributes(overtime_parameter)
+      else  
+        @attendance.update_attributes(overtime_parameter)
+      end
+      redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on})
     end
-    redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on})
+    
   end
   
 
