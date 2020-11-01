@@ -88,7 +88,12 @@
       <%= link_to "#{@overtime_request_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @overtime_request_count>0 %>
     </span><br/>
 
-    <span>[勤怠変更申請のお知らせ]</span><br/>
+    <span class="<%= @edit_request_count == 0?'over_time_nil' : 'over_time_present'%>">
+      [勤怠変更申請のお知らせ]
+      <%= link_to "#{@edit_request_count}件の勤怠変更申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @edit_request_count>0 %>
+    </span><br/>
+
+    <span></span><br/>
 　<% end %>
 </div>
 

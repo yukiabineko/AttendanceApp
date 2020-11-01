@@ -49,6 +49,9 @@ class Attendance < ApplicationRecord
  
   #残業申請されているattendance
   scope :user_request, ->(user) { where(superior_name: user.name)}
+
+  
+  
   
   #enumによる分岐
   def enum_check
