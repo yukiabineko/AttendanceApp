@@ -50,7 +50,9 @@ class Attendance < ApplicationRecord
   #残業申請されているattendance
   scope :user_request, ->(user) { where(superior_name: user.name)}
 
-  
+  #勤怠変更申請されている attendance
+  scope :edit_request, ->(user) { where(edit_superior_name: user.name).where(edit_permit: :inprogress2)}
+ 
   
   
   #enumによる分岐

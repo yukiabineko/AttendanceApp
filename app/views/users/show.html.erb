@@ -1,6 +1,7 @@
 <div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}詳細" %></h1></div>
 <div id="over_time" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="over_time_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit_time_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 
 <table class="table table-bordered">
@@ -90,7 +91,7 @@
 
     <span class="<%= @edit_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [勤怠変更申請のお知らせ]
-      <%= link_to "#{@edit_request_count}件の勤怠変更申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @edit_request_count>0 %>
+      <%= link_to "#{@edit_request_count}件の勤怠変更申請があります。", edit_permit_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @edit_request_count>0 %>
     </span><br/>
 
     <span></span><br/>

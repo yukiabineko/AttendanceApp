@@ -107,8 +107,12 @@ class UsersController < ApplicationController
     @request_users = request_user_name       #=>helperより
   end
   
-  
-  
+  #勤怠変更モーダル
+  def edit_permit_modal
+    @user = User.find( params[:id] )
+    @request_attendances = Attendance.edit_request(@user)
+    @request_users = request_user_name       #=>helperより
+  end
 
 
 private

@@ -81,9 +81,14 @@ def edit_attendance_request_count
   Attendance.where(edit_superior_name: self.name).where(edit_permit: :inprogress2).count
 end
 
-#上長名で検索
+#残業申請上長名で検索
 def request_record(name)
   self.attendances.where(superior_name: name).where(permit: :inprogress)
+end
+
+#勤怠変更上長名で検索
+def edit_request_record(name)
+  self.attendances.where(edit_superior_name: name).where(edit_permit: :inprogress2)
 end
   
   

@@ -1,0 +1,53 @@
+
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+       <% @request_users.each do |user| %>
+          <% if user.edit_request_record(@user.name).count >0 %>
+             <div class="text-center mb-3"><h5><%= "[#{user.name}からの勤怠変更申請]" %></h5></div>
+              <table class="table table-bordered striped" style="font-size:12px">
+               <thead>
+                <tr>
+                    <th class="text-center align-middle" rowspan="3">日付</th>
+                    <th class="text-center align-middle" rowspan="3">曜日</th>
+                    <th class="text-center" colspan="4">変更前</th>
+                    <th class="text-center" colspan="4">変更後</th>
+                    <th class="text-center align-middle" rowspan="3">備考</th>
+                    <th class="text-center align-middle" rowspan="3">指示者確認㊞</th>
+                    <th class="text-center align-middle" rowspan="3">変更</th>
+                    <th class="text-center align-middle" rowspan="3">勤怠を確認する</th>
+                </tr>
+                <tr>
+                    <th class="text-center" colspan="2">出社</th>
+                    <th class="text-center" colspan="2">退社</th>
+                    <th class="text-center" colspan="2">出社</th>
+                    <th class="text-center" colspan="2">退社</th>
+                </tr>
+                <tr>
+                     <th class="text-center">時</th>
+                     <th class="text-center">分</th>
+                     <th class="text-center">時</th>
+                     <th class="text-center">分</th>
+
+                     <th class="text-center">時</th>
+                     <th class="text-center">分</th>
+                     <th class="text-center">時</th>
+                     <th class="text-center">分</th>
+                </tr>
+               </thead>
+               <tbody class="bg-light">
+                   <% user.edit_request_record(@user.name).each do |attendance| %>
+                    <tr>
+                      <td class="text-center"><%= l(attendance.worked_on, format: :short) %></td> 
+                      <td class="text-center"><%= @week[attendance.worked_on.wday] %></td> 
+                    </tr>
+                   <% end %>
+               </tbody>
+              </table><br/>
+          <% end %>
+       <% end %>
+    </div>
+  </div>
