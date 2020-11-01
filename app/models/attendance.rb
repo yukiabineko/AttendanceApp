@@ -5,6 +5,11 @@ class Attendance < ApplicationRecord
     ok: 2,
     not: 3
   }
+  enum edit_permit:{
+    inprogress2: 1,
+    ok2: 2,
+    not2: 3
+  }
 
   #出勤時間
 
@@ -56,6 +61,21 @@ class Attendance < ApplicationRecord
       return "#{self.superior_name}から残業承認済み" if self.superior_name.present?
     when 'not'
       return "#{self.superior_name}から残業否認済み" if self.superior_name.present?
+    else
+    end  
+  end
+
+  #enum勤怠編集編集による分岐
+  def edit_enum_check
+    case self.edit_permit
+    when 0
+      return ''
+    when "inprogress2"
+      return "#{self.edit_superior_name}に変更申請中" if self.edit_superior_name.present?
+    when 'ok2'
+      return "#{self.edit_superior_name}から変更承認済み" if self.edit_superior_name.present?
+    when 'not2'
+      return "#{self.edit_superior_name}から変更否認済み" if self.edit_superior_name.present?
     else
     end  
   end

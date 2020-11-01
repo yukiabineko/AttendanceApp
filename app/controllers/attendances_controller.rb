@@ -5,7 +5,6 @@ class AttendancesController < ApplicationController
   end
 
   def edit
-    @superior_name = superior_name
   end
 
 
@@ -13,20 +12,30 @@ class AttendancesController < ApplicationController
     if params_check                                                    #=>helper参照
       attendance_parameter.each do |id, value|
         attendance = Attendance.find id
+        if value[:edit_superior_name] == "" && !value[:request_startedtime].blank?
+          attendance_parameter.each do |id, item|
+            attendance = Attendance.find id
+            attendance.update(request_startedtime: item[:request_startedtime], request_finishedtime: item[:request_finishedtime], note: item[:note]) #=>renderで自動入力状態を保つため
+          end
+          flash.now[:notice] ="申告先を選択してください。"
+          render :edit
+          return
+        end
         attendance.update_attributes(value)
+        attendance.update_attributes(edit_permit: :inprogress2)
       end
         redirect_to user_url(@user, params:{first_day: @first_day}),notice: "編集しました。"
     else
       attendance_parameter.each do |id, item|
         attendance = Attendance.find id
-        attendance.update(started_at: item[:started_at], finished_at: item[:finished_at], note: item[:note])
+        attendance.update(request_startedtime: item[:request_startedtime], request_finishedtime: item[:request_finishedtime], note: item[:note]) #=>renderで自動入力状態を保つため
       end
       flash.now[:notice] ="編集失敗。"
       render :edit
     end  
   end
 
-  #上長申請返信処理
+  #上長残業申請返信処理
   def permit_request
     user = User.find( params[:id] )
     attendance_parameter.each do |id, item|
@@ -59,20 +68,21 @@ class AttendancesController < ApplicationController
     if overtime_validation == false
       redirect_to user_url(@attendance.user, params:{first_day: @attendance.worked_on}), notice: '終了時間が不正です。'
     else
+      if params[:attendance][:superior_name] == ""
+        redirect_to user_url(@attendance.user, params:{first_day: @attendance.worked_on}), notice: '申告先を選択してください。'
+        return
+      end
       if params[:attendance][:tommorow_check] == '1'
         @tomorrow_attendance = @attendance.user.attendances.find_by(worked_on: @attendance.worked_on.tomorrow)
         @tomorrow_attendance.update_attributes(overtime_parameter)
       else  
         @attendance.update_attributes(overtime_parameter)
       end
-      redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on})
+      redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on}),notice: '残業申請しました。'
     end
     
   end
   
-
-
-
 
 private
   def attendance_parameter
@@ -83,7 +93,11 @@ private
         :note,
         :superior_name,
         :change,
-        :permit
+        :permit,
+        :request_startedtime,
+        :request_finishedtime,
+        :edit_superior_name,
+        :edit_permit
       ]
       )[:attendances]
   end
@@ -105,6 +119,7 @@ private
     @last_day = @first_day.end_of_month
     @days = @user.searchDay(@first_day, @last_day)
     @week = %w(日 月 火 水 木 金 土)
+    @superior_name = superior_name
   end
   
   

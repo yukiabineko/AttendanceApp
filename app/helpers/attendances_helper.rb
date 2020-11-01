@@ -2,11 +2,13 @@ module AttendancesHelper
   def params_check
     flag = []
     attendance_parameter.each do |id, item|
-      if item[:started_at].nil? && item[:finished_at].nil?
+      if item[:request_startedtime].nil? && item[:request_finishedtime].nil? && item[:edit_superior_name].blank?
         next
-      elsif item[:started_at] > item[:finished_at]
+      elsif item[:request_startedtime].blank? && item[:request_finishedtime].blank? && item[:edit_superior_name].blank?
+        next
+      elsif item[:request_startedtime] > item[:request_finishedtime]
         flag << false
-      elsif item[:started_at].nil? || item[:finished_at].nil?
+      elsif item[:request_startedtime].blank? || item[:request_finishedtime].blank?
         flag << false
       else
         flag << true
@@ -19,7 +21,7 @@ module AttendancesHelper
   def overtime_validation
     finish_time = (@attendance.finished_at.hour.to_i * 60) + @attendance.finished_at.min.to_i
     if params[:attendance]["overtime(1i)"].blank?
-      return true
+      return false
     end
     overtime  = (params[:attendance]["overtime(4i)"].to_i) *60 + params[:attendance]["overtime(5i)"].to_i
     comp = overtime - finish_time

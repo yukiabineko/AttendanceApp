@@ -7,6 +7,11 @@ ja:
         inprogress: 申請中
         ok: 承認済み
         not: 否認済み
+      edit_permit:
+        non2: ''
+        inprogress2: 申請中
+        ok2: 承認済み
+        not2: 否認済み
   activerecord:
     errors:
       messages:

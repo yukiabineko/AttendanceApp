@@ -28,8 +28,9 @@
         <td><%= af.time_field :request_startedtime, class:'form-control' if day.worked_on < Date.today %></td>
         <td><%= af.time_field :request_finishedtime, class:'form-control' if day.worked_on < Date.today %></td>
         <td></td>
-        <td><%= af.text_field :note, class:'form-control' if day.worked_on < Date.today %></td>
-        <td><%= af.select :edit_superior_name, @superior_name, {}, class:'form-control' %></td>
+        <td><%= af.text_field :note, class:'form-control ' if day.worked_on < Date.today %></td>
+        <td><%= af.select :edit_superior_name, @superior_name,{}, class:'form-control edit_select' %></td>
+        
       </tr>
       <% end %>
     <% end %>
