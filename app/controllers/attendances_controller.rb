@@ -80,8 +80,35 @@ class AttendancesController < ApplicationController
       end
       redirect_to user_path(@attendance.user, params:{first_day: @attendance.worked_on}),notice: '残業申請しました。'
     end
-    
   end
+
+#勤怠変更処理
+def edit_permit
+  @user = User.find( params[:id] )
+  attendance_parameter.each do |id, item|
+    if item[:edit_check] == '1'
+      attendance = Attendance.find id
+      if item[:edit_permit] == 'ok2'
+        attendance.update_attributes(
+          edit_permit: item[:edit_permit],
+          started_at: attendance.request_startedtime,
+          finished_at: attendance.request_finishedtime,
+          request_startedtime: '',
+          request_finishedtime: ''
+        )
+      elsif item[:edit_permit] == 'no2'
+        attendance.update_attributes(
+          edit_permit: item[:edit_permit],
+          request_startedtime: '',
+          request_finishedtime: ''
+        )
+      end
+     
+    end
+  end
+  redirect_to user_url(@user, params:{first_day: params[:day]})
+end
+
   
 
 private
@@ -97,6 +124,7 @@ private
         :request_startedtime,
         :request_finishedtime,
         :edit_superior_name,
+        :edit_check,
         :edit_permit
       ]
       )[:attendances]

@@ -1,11 +1,11 @@
 
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="width:100%;">
       <div class="modal-body">
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      <%= form_with model: @user, url: permit_request_attendance_path(@user,params:{day: params[:day]}), local: true,  method: :patch do |f| %>
+      <%= form_with model: @user, url: edit_permit_attendance_path(@user,params:{day: params[:day]}), local: true,  method: :patch do |f| %>
        <% @request_users.each do |user| %>
           <% if user.edit_request_record(@user.name).count >0 %>
              <div class="text-center mb-3"><h5><%= "[#{user.name}からの勤怠変更申請]" %></h5></div>
@@ -57,8 +57,11 @@
                       <td  class="align-middle">
                         <%= af.select :edit_permit, Attendance.edit_permits.keys.map {|k| [I18n.t("enums.attendance.edit_permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %>
                       </td>
+                      <td>
+                        <%= af.check_box :edit_check %>
+                      </td>
                        <td  class="align-middle">
-                         <td><%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary btn-sm' %></td>
+                         <%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary btn-sm' %>
                        </td>
                     </tr>
                     <% end %>
