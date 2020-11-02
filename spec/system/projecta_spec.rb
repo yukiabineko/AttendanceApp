@@ -153,7 +153,7 @@ describe "users", type: :system do
     end
   end
 ########################################################################################################################
-  ########  勤怠編集処理  ###############################
+  ########  勤怠編集処理 申請者 ###############################
   describe "edit_attendance" do
     #出退勤入力
     before do
@@ -161,14 +161,15 @@ describe "users", type: :system do
         started_at: "2020-03-04 01:00:00 +0900",
         finished_at: "2020-03-04 09:00:00 +0900"
       )
+      visit login_path
+      fill_in "session[email]",	with: "cat@example.com" 
+      fill_in "session[password]",	with: "123" 
+      click_button "ログイン"
     end
     #ユーザー申告
     context "user request" do
       before do
-        visit login_path
-        fill_in "session[email]",	with: "cat@example.com" 
-        fill_in "session[password]",	with: "123" 
-        click_button "ログイン"
+       
 
         visit edit_user_attendance_path(@user2, @attendance2.worked_on)
         fill_in "user[attendances][#{@attendance2.id}][request_startedtime]", with: "12:00"
@@ -194,6 +195,27 @@ describe "users", type: :system do
     end 
   end
 ##############################################################################################################  
-  
-  
+   ########  勤怠編集処理上長 ###############################
+   describe "edit_attendance",js:true do
+    #出退勤入力
+    before do
+      @attendance2.update_attributes(
+        started_at: "2020-03-04 01:00:00 +0900",
+        finished_at: "2020-03-04 09:00:00 +0900",
+        request_startedtime:"2020-03-04 12:00:00 +0900",
+        request_finishedtime:"2020-03-04 15:00:00 +0900",
+        edit_superior_name: @user3.name,
+        edit_permit:"inprogress2"
+      )
+      visit login_path
+        fill_in "session[email]",	with: "pico@example.com" 
+        fill_in "session[password]",	with: "123" 
+        click_button "ログイン"
+    end
+    it "view" do
+      expect(page).to  have_content "[勤怠変更申請のお知らせ] 1件の勤怠変更申請があります。"
+    end
+    
+  end
+########################################################################################  
 end
