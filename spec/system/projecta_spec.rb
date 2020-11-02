@@ -30,17 +30,25 @@ describe "users", type: :system do
 
       @first = Date.today.beginning_of_month
       @last = @first.end_of_month
+
       (@first .. @last).each do |day|
         unless @user.attendances.any?{|attendance| attendance.worked_on == day}
           record = @user.attendances.build(worked_on: day)
           record.save
+        end
+      end
 
+      (@first .. @last).each do |day|
+        unless @user2.attendances.any?{|attendance| attendance.worked_on == day}
           record2 = @user2.attendances.build(worked_on: day)
           record2.save
+        end
+      end
 
-          record3 = @user3.attendances.build(worked_on: day)
+      (@first .. @last).each do |day|
+        unless @user3.attendances.any?{|attendance| attendance.worked_on == day}
+          record3 = @user2.attendances.build(worked_on: day)
           record3.save
-
         end
       end
     @attendance = @user.attendances.first
@@ -97,6 +105,7 @@ describe "users", type: :system do
        #モーダル内入力による更新明日の日付選択
       it "update" do
         fill_in "attendance[work_contents]",	with: "掃除" 
+        select(value = @user3.name, from: "attendance[superior_name]")
         select(value = "21", from: "attendance[overtime(4i)]") 
         select(value = "00", from: "attendance[overtime(5i)]") 
         check
@@ -141,13 +150,50 @@ describe "users", type: :system do
           click_button "ログイン"
           expect(page).to  have_content 'picoから残業承認済み'
         end
-        
     end
-    
-    
-
   end
-  
+########################################################################################################################
+  ########  勤怠編集処理  ###############################
+  describe "edit_attendance" do
+    #出退勤入力
+    before do
+      @attendance2.update_attributes(
+        started_at: "2020-03-04 01:00:00 +0900",
+        finished_at: "2020-03-04 09:00:00 +0900"
+      )
+    end
+    #ユーザー申告
+    context "user request" do
+      before do
+        visit login_path
+        fill_in "session[email]",	with: "cat@example.com" 
+        fill_in "session[password]",	with: "123" 
+        click_button "ログイン"
+
+        visit edit_user_attendance_path(@user2, @attendance2.worked_on)
+        fill_in "user[attendances][#{@attendance2.id}][request_startedtime]", with: "12:00"
+        fill_in "user[attendances][#{@attendance2.id}][request_finishedtime]", with: "15:00"
+        select(value = @user3.name, from: "user[attendances][#{@attendance2.id}][edit_superior_name]") 
+        click_button "編集"
+
+      end
+      it "request success" do
+        expect(page).to have_content "編集しました。" 
+      end
+
+       #上長側確認、処理
+      it "superior permit" do
+        visit login_path
+        fill_in "session[email]",	with: "pico@example.com" 
+        fill_in "session[password]",	with: "123" 
+        click_button "ログイン"
+         #申請がある
+         expect(page).to  have_content "[勤怠変更申請のお知らせ] 1件の勤怠変更申請があります。"
+      end
+      
+    end 
+  end
+##############################################################################################################  
   
   
 end

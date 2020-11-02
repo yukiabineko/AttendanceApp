@@ -110,6 +110,7 @@ class UsersController < ApplicationController
   #勤怠変更モーダル
   def edit_permit_modal
     @user = User.find( params[:id] )
+    @week = %w(日 月 火 水 木 金 土)
     @request_attendances = Attendance.edit_request(@user)
     @request_users = request_user_name       #=>helperより
   end

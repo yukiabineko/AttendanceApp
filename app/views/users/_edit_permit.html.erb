@@ -5,10 +5,11 @@
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+      <%= form_with model: @user, url: permit_request_attendance_path(@user,params:{day: params[:day]}), local: true,  method: :patch do |f| %>
        <% @request_users.each do |user| %>
           <% if user.edit_request_record(@user.name).count >0 %>
              <div class="text-center mb-3"><h5><%= "[#{user.name}からの勤怠変更申請]" %></h5></div>
-              <table class="table table-bordered striped" style="font-size:12px">
+              <table class="table table-bordered table-striped" style="font-size:12px">
                <thead>
                 <tr>
                     <th class="text-center align-middle" rowspan="3">日付</th>
@@ -38,16 +39,34 @@
                      <th class="text-center">分</th>
                 </tr>
                </thead>
-               <tbody class="bg-light">
+               <tbody>
                    <% user.edit_request_record(@user.name).each do |attendance| %>
+                    <%= f.fields_for "attendances[]", attendance do |af| %>
                     <tr>
-                      <td class="text-center"><%= l(attendance.worked_on, format: :short) %></td> 
-                      <td class="text-center"><%= @week[attendance.worked_on.wday] %></td> 
+                      <td class="text-center align-middle"><%= l(attendance.worked_on, format: :short) %></td> 
+                      <td class="text-center  align-middle"><%= @week[attendance.worked_on.wday] %></td>
+                      <td  class="align-middle"><%= l(attendance.started_at, format: :hour) if attendance.started_at.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.started_at, format: :min) if attendance.started_at.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.finished_at, format: :hour) if attendance.finished_at.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.finished_at, format: :min) if attendance.finished_at.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.request_startedtime, format: :hour) if attendance.request_startedtime.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.request_startedtime, format: :min) if attendance.request_startedtime.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.request_finishedtime, format: :hour) if attendance.request_finishedtime.present?  %></td>
+                      <td  class="align-middle"><%= l(attendance.request_finishedtime, format: :min) if attendance.request_finishedtime.present?  %></td>
+                      <td class="text-center"><%= attendance.note %></td> 
+                      <td  class="align-middle">
+                        <%= af.select :edit_permit, Attendance.edit_permits.keys.map {|k| [I18n.t("enums.attendance.edit_permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %>
+                      </td>
+                       <td  class="align-middle">
+                         <td><%= link_to '勤怠確認', user_path(attendance.user,params:{first_day: attendance.worked_on}), class: 'btn btn-primary btn-sm' %></td>
+                       </td>
                     </tr>
+                    <% end %>
                    <% end %>
                </tbody>
               </table><br/>
           <% end %>
        <% end %>
+      <% end %>
     </div>
   </div>
