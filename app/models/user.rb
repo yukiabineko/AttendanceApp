@@ -2,6 +2,7 @@ class User < ApplicationRecord
   require 'csv'
   has_secure_password
   has_many :attendances, dependent: :destroy
+  has_many :months, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true,allow_blank: true

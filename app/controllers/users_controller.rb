@@ -39,11 +39,18 @@ class UsersController < ApplicationController
         record.save
       end
     end
+    #月データ作成
+    month = @user.months.where(request_month: @first_day.strftime('%m月')).where(year: @first_day.strftime('%Y')) 
+    if month.count == 0 
+      record = @user.months.build(request_month: @first_day.strftime('%m月'), year: @first_day.strftime('%Y'))
+      record.save
+    end
     @days = @user.searchDay(@first_day, @last_day)
     @week = %w(日 月 火 水 木 金 土)
     @work_count = @user.attendances.work_count                           #-> modelより
     @overtime_request_count = @user.superior_request_count               #->残業申請数
     @edit_request_count = @user.edit_attendance_request_count
+    @superior_name = superior_name  #=>ヘルパーメゾット
   end
 
   def update
