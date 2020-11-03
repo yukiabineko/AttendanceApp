@@ -215,6 +215,29 @@ describe "users", type: :system do
     it "view" do
       expect(page).to  have_content "[勤怠変更申請のお知らせ] 1件の勤怠変更申請があります。"
     end
+
+   it "modal view" do
+     click_on "1件の勤怠変更申請があります。"
+     expect(page).to  have_content "[abi2からの勤怠変更申請]"
+   end
+
+   #上長承認後、承認済みを確認
+   it "modal view" do
+    click_on "1件の勤怠変更申請があります。"
+   check
+   select(value = "承認済み", from: "user[attendances][#{@attendance2.id}][edit_permit]") 
+   click_on '変更を送信する'
+
+   visit login_path
+   fill_in "session[email]",	with: "cat@example.com" 
+   fill_in "session[password]",	with: "123" 
+   click_button "ログイン"
+   expect(page).to  have_content "#{@user3.name}から変更承認済み"
+   
+
+  end
+   
+    
     
   end
 ########################################################################################  

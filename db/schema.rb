@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_170853) do
+ActiveRecord::Schema.define(version: 2020_10_31_134031) do
 
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "worked_on"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2020_11_02_170853) do
     t.datetime "request_startedtime"
     t.datetime "request_finishedtime"
     t.string "edit_superior_name"
-    t.integer "edit_permit", default: 0
     t.boolean "edit_check", default: false
+    t.integer "edit_permit", default: 0
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
