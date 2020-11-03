@@ -1,5 +1,5 @@
 class MonthsController < ApplicationController
-  def show
+  def update
     
   end
 end

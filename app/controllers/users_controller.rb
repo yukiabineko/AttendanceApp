@@ -51,6 +51,7 @@ class UsersController < ApplicationController
     @overtime_request_count = @user.superior_request_count               #->残業申請数
     @edit_request_count = @user.edit_attendance_request_count
     @superior_name = superior_name  #=>ヘルパーメゾット
+    @month = @user.months.find_by(request_month: @first_day.strftime('%m月') , year: @first_day.strftime('%Y'))
   end
 
   def update
