@@ -14,13 +14,13 @@ Rails.application.routes.draw do
      
     end
     post :import, on: :collection
-  
+    get :month_modal, on: :member
     
    
   end
 
   resources :attendances, only:[:show] do
-    resources :users do
+    resources :users, only:[] do
       get :overtime_modal_open, on: :collection
     end
 
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     end
     
   end
-  resources :months, only:[:update]
+  resources :months, only:[:update] 
 
   root 'users#index'
 end

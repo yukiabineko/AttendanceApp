@@ -2,6 +2,7 @@
 <div id="over_time" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="over_time_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="edit_time_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="month_permit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 
 <table class="table table-bordered">
@@ -82,26 +83,24 @@
 
 <div>
   <% if @user.superior %>
-  　<span class="<%= @month_count == 0?'over_time_nil' : 'over_time_present'%>">
-     [所属長承認申請のお知らせ]
-      <%= link_to "#{@month_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @overtime_request_count>0 %>
-    </span><br/>
+  　<div class="<%= @month_count == 0?'over_time_nil' : 'over_time_present'%>">
+      [所属長承認申請のお知らせ]
+      <%= link_to "#{@month_count}件の承認申請があります。",month_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @month_count>0 %>
+    </div>
 
-    <span class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
+    <div class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [残業申請承認申請のお知らせ]
       <%= link_to "#{@overtime_request_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @overtime_request_count>0 %>
-    </span><br/>
+    </div>
 
-    <span class="<%= @edit_request_count == 0?'over_time_nil' : 'over_time_present'%>">
+    <div class="<%= @edit_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [勤怠変更申請のお知らせ]
       <%= link_to "#{@edit_request_count}件の勤怠変更申請があります。", edit_permit_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @edit_request_count>0 %>
-    </span><br/>
-
-    <span></span><br/>
+    </div>
 　<% end %>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-2">
   <div class="col-md-3">
   <% if @user == current_user || current_user.admin  %>
     <%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
@@ -218,7 +217,7 @@
           <p><%="所属長承認　未" %></p>
           <%= f.select :superior_name, @superior_name, {}, class: 'form-control mb-3' %>
           <%= f.submit '申請', class: 'btn btn-primary btn-block' %>
-          <%= f.hidden_field :permit_month, value: " inprogress3" %>
+          <%= f.hidden_field :permit_month, value: :inprogress3 %>
         <% end %>
       </td>
     </tr>
