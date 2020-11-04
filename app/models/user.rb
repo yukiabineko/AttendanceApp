@@ -91,6 +91,10 @@ end
 def edit_request_record(name)
   self.attendances.where(edit_superior_name: name).where(edit_permit: :inprogress2)
 end
-  
+
+#月の申請数
+  def month_request_count
+    Month.where(superior_name: self.name).where(permit_month: :inprogress3).count
+  end
   
 end

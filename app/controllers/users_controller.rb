@@ -49,6 +49,7 @@ class UsersController < ApplicationController
     @week = %w(日 月 火 水 木 金 土)
     @work_count = @user.attendances.work_count                           #-> modelより
     @overtime_request_count = @user.superior_request_count               #->残業申請数
+    @month_count = @user.month_request_count                             #->1ヶ月申請数
     @edit_request_count = @user.edit_attendance_request_count
     @superior_name = superior_name  #=>ヘルパーメゾット
     @month = @user.months.find_by(request_month: @first_day.strftime('%m月') , year: @first_day.strftime('%Y'))

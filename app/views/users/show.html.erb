@@ -82,7 +82,10 @@
 
 <div>
   <% if @user.superior %>
-    <span>[所属長承認申請のお知らせ]</span><br/>
+  　<span class="<%= @month_count == 0?'over_time_nil' : 'over_time_present'%>">
+     [所属長承認申請のお知らせ]
+      <%= link_to "#{@month_count}件の残業申請があります。", overtime_confirm_modal_user_path(@user,params:{day: @first_day}), remote: true, class:"user_request" if @overtime_request_count>0 %>
+    </span><br/>
 
     <span class="<%= @overtime_request_count == 0?'over_time_nil' : 'over_time_present'%>">
       [残業申請承認申請のお知らせ]
@@ -215,6 +218,7 @@
           <p><%="所属長承認　未" %></p>
           <%= f.select :superior_name, @superior_name, {}, class: 'form-control mb-3' %>
           <%= f.submit '申請', class: 'btn btn-primary btn-block' %>
+          <%= f.hidden_field :permit_month, value: " inprogress3" %>
         <% end %>
       </td>
     </tr>
