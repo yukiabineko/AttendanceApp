@@ -94,7 +94,7 @@ end
 
 #月の申請数
   def month_request_count
-    Month.where(superior_name: self.name).where(permit_month: 0).count
+    Month.where(superior_name: self.name).where(permit_month: :inprogress3).count
   end
   
 end
