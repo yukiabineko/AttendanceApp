@@ -12,6 +12,12 @@ ja:
         inprogress2: 申請中
         ok2: 承認済み
         not2: 否認済み
+    month:
+      month_permit:
+        non3: ''
+        inprogress3: 申請中
+        ok3: 承認済み
+        not3: 否認済み
   activerecord:
     errors:
       messages:
