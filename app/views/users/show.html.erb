@@ -219,6 +219,7 @@
           <%= f.select :superior_name, @superior_name, {}, class: 'form-control mb-3' %>
           <%= f.submit '申請', class: 'btn btn-primary btn-block' %>
           <%= f.hidden_field :permit_month, value: 1 %>
+          <%= f.hidden_field :base_day, value: @first_day %>
         <% end %>
       <% end %>  
       </td>

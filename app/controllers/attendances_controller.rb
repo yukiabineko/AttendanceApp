@@ -44,7 +44,7 @@ class AttendancesController < ApplicationController
         attendance.update_attributes(item)
       end
     end
-    redirect_to user_url(@user, params:{first_day: params[:day]})
+    redirect_to user_url(@user, params:{first_day: params[:day]}),notice: '申請処理しました。'
   end
   
   

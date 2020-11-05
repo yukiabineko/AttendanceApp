@@ -32,7 +32,9 @@ Rails.application.routes.draw do
     end
     
   end
-  resources :months, only:[:update]
+  resources :months, only:[:update] do
+    patch :response_superior, on: :member
+  end
 
   root 'users#index'
 end

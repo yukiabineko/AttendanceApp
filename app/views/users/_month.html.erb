@@ -5,7 +5,7 @@
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <%= form_with url: "#", local: true do |f| %>
+        <%= form_with model:@user, url: response_superior_month_path(@user,params:{day: params[:day]}), local: true, mehod: :patch  do |f| %>
          <% @request_users.each do | user| %>
             <div class="text-center mb-3"><h5><%= "[#{user.name}からの一ヶ月分申請]" %></h5></div>
             <table class="table table-bordered table-striped" style="font-size:12px">
@@ -23,13 +23,13 @@
                 <tr>
                   <td class="text-center align-middle"><%= month.request_month %></td>
                   <td class="text-center align-middle">
-                    <%= af.select :permit_month, [],{}, class: 'form-control' %>
+                    <%= af.select :permit_month, Month.month_permits.keys.map {|k| [I18n.t("enums.month.month_permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %>
                   </td>
                    <td class="text-center align-middle">
-                    <%= af.check_box :permit_month %>
+                    <%= af.check_box :check %>
                   </td>
                   <td class="text-center align-middle">
-                   <%= link_to '勤怠確認', user_path(user,params:{first_day: params[:day]}), class: 'btn btn-primary btn-sm' %>
+                   <%= link_to '勤怠確認', user_path(user,params:{first_day: month.base_day}), class: 'btn btn-primary btn-sm' %>
                   </td>
                 </tr>
                 <% end %>
@@ -37,6 +37,9 @@
                </tbody>
               </table><br/>
          <% end %>
+           <div class="text-center">
+               <%= f.submit '変更を送信する', class: 'btn btn-primary'%>
+           </div>
         <% end %>
       </div>
     </div>

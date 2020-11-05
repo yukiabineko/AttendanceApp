@@ -42,7 +42,11 @@ class UsersController < ApplicationController
     #月データ作成
     month = @user.months.where(request_month: @first_day.strftime('%m月')).where(year: @first_day.strftime('%Y')) 
     if month.count == 0 
-      record = @user.months.build(request_month: @first_day.strftime('%m月'), year: @first_day.strftime('%Y'))
+      record = @user.months.build(
+        request_month: @first_day.strftime('%m月'),
+         year: @first_day.strftime('%Y'),
+         base_day: @first_day
+      )
       record.save
     end
     @days = @user.searchDay(@first_day, @last_day)
