@@ -23,7 +23,7 @@
                 <tr>
                   <td class="text-center align-middle"><%= month.request_month %></td>
                   <td class="text-center align-middle">
-                    <%= af.select :permit_month, Month.month_permits.keys.map {|k| [I18n.t("enums.month.month_permit.#{k}"), k]}, {disabled: 0}, class: 'form-control' %>
+                    <%= af.select :permit_month, Month.permit_months.keys.map {|k| [I18n.t("enums.month.permit_month.#{k}"), k]}, {disabled: 0}, class: 'form-control' %>
                   </td>
                    <td class="text-center align-middle">
                     <%= af.check_box :check %>

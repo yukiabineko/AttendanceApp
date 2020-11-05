@@ -13,7 +13,7 @@ ja:
         ok2: 承認済み
         not2: 否認済み
     month:
-      month_permit:
+      permit_month:
         non3: ''
         inprogress3: 申請中
         ok3: 承認済み
