@@ -37,12 +37,25 @@ describe "Month",type: :system do
       click_button "ログイン"
 
     end
-    
+    #フォームが表示され未認証確認
      context "view form" do
        it "success" do
          expect(page).to  have_content '所属長承認 未'
        end
      end
+     #上長申請
+     context "request" do
+       before do
+        select(value = @userA.name, from: "month[superior_name]")
+        click_button "申請"
+       end
+       #申請済み表示に変わる。
+       it "success" do
+        expect(page).to  have_content '所属長承認 abiに申請中'
+       end
+       
+     end
+     
    end
 ####################################################################################################################   
 
