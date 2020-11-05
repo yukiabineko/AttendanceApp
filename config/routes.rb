@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       patch :info_update
       get :overtime_confirm_modal
       get :edit_permit_modal
-     
+      
     end
     post :import, on: :collection
     get :month_modal, on: :member
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     end
     
   end
-  resources :months, only:[:update] 
+  resources :months, only:[:update]
 
   root 'users#index'
 end

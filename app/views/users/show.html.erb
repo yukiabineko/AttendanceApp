@@ -102,7 +102,7 @@
 
 <div class="row mt-2">
   <div class="col-md-3">
-  <% if @user == current_user || current_user.admin  %>
+  <% if @user == current_user  %>
     <%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
     <%=link_to 'CSV出力', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
     <%=link_to '勤怠ログ', "#", class: 'btn btn-primary btn-block' %>
@@ -213,12 +213,14 @@
        <%= @user.month_total(@days)%>
       </td>
       <td colspan="4" class="text-center">
-        <%= form_with model: @month, url: month_path(@month), local: true, method: :patch do |f| %>
+      <% if @user == current_user %>
+        <%= form_with model: @month, url: month_path(@month), local: true, method: :patch do |f|  %>
           <p><%="所属長承認　未" %></p>
           <%= f.select :superior_name, @superior_name, {}, class: 'form-control mb-3' %>
           <%= f.submit '申請', class: 'btn btn-primary btn-block' %>
-          <%= f.hidden_field :permit_month, value: :inprogress3 %>
+          <%= f.hidden_field :permit_month, value: 1 %>
         <% end %>
+      <% end %>  
       </td>
     </tr>
   </tfoot>

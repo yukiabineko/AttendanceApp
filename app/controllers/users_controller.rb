@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :user_set, only: [ :edit, :update, :destroy]
+  before_action :user_set, only: [ :edit, :update, :destroy, :show, :month_modal]
   before_action :admin_check, only: [:index, :info_edit]
   before_action :other_user_access, only: [:show]
 
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find( params[:id] )
+    
     if params[:first_day].nil?
       @first_day = Date.today.beginning_of_month
     else
@@ -123,6 +123,13 @@ class UsersController < ApplicationController
     @request_attendances = Attendance.edit_request(@user)
     @request_users = request_user_name       #=>helperより
   end
+
+  #一ヶ月申請モーダル
+  def month_modal
+    @request_months = Month.month_request(@user)
+    @request_users = request_months_users
+  end
+  
 
 
 private

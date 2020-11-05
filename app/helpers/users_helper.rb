@@ -11,7 +11,8 @@ module UsersHelper
     end
     return array
   end
-  #申請中ユーザー名
+
+  #勤怠変更申請中ユーザー名
   def request_user_name
     names = []
     @request_attendances.each do |attendance|
@@ -19,4 +20,15 @@ module UsersHelper
     end
     return names.uniq
   end
+
+  #一ヶ月申請中ユーザー名
+  def request_months_users
+    names = []
+    @request_months.each do |month|
+      names << month.user
+    end
+    return names.uniq
+  end
+
+
 end

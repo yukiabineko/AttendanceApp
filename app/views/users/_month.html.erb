@@ -1,6 +1,43 @@
 
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" style="width:100%;">
-      <div class="modal-body"></div>
+      <div class="modal-body">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= form_with url: "#", local: true do |f| %>
+         <% @request_users.each do | user| %>
+            <div class="text-center mb-3"><h5><%= "[#{user.name}からの一ヶ月分申請]" %></h5></div>
+            <table class="table table-bordered table-striped" style="font-size:12px">
+               <thead>
+                <tr>
+                    <th class="text-center align-middle">月</th>
+                    <th class="text-center align-middle">指示者確認㊞</th>
+                    <th class="text-center align-middle">変更</th>
+                    <th class="text-center align-middle">勤怠を確認する</th>
+                </tr>
+               </thead>
+               <tbody>
+               <% user.month_request_record(@user.name).each do |month| %>
+                <%= f.fields_for "months[]", month do |af| %>
+                <tr>
+                  <td class="text-center align-middle"><%= month.request_month %></td>
+                  <td class="text-center align-middle">
+                    <%= af.select :permit_month, [],{}, class: 'form-control' %>
+                  </td>
+                   <td class="text-center align-middle">
+                    <%= af.check_box :permit_month %>
+                  </td>
+                  <td class="text-center align-middle">
+                   <%= link_to '勤怠確認', user_path(user,params:{first_day: params[:day]}), class: 'btn btn-primary btn-sm' %>
+                  </td>
+                </tr>
+                <% end %>
+               <% end %>
+               </tbody>
+              </table><br/>
+         <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
