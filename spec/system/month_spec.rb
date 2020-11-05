@@ -44,14 +44,29 @@ describe "Month",type: :system do
        end
      end
      #上長申請
-     context "request" do
+     context "request", js:true do
        before do
         select(value = @userA.name, from: "month[superior_name]")
         click_button "申請"
        end
+
        #申請済み表示に変わる。
        it "success" do
         expect(page).to  have_content '所属長承認 abiに申請中'
+       end
+
+       #上長側承認、申告者確認
+       it "success　response" do
+         visit login_path
+         fill_in "session[email]",	with: "abi@example.com" 
+         fill_in "session[password]",	with: "123" 
+         click_button "ログイン"
+
+         #申請確認
+         expect(page).to  have_content '1件の承認申請があります。' 
+         click_on "1件の承認申請があります。"
+         expect(page).to  have_content '[catからの一ヶ月分申請]'
+   
        end
        
      end
