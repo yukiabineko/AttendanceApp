@@ -14,26 +14,35 @@ class Attendance < ApplicationRecord
   #出勤時間
 
   def start_time_set
-    self.started_at = Time.new(
+    time = Time.new(
         Time.now.year,
         Time.now.month,
         Time.now.day,
         Time.now.hour,
         Time.now.min, 0
       )
+    self.started_at =time
+    log = self.start_log.to_s
+    log += "," + time.strftime("%H:%M")
+    self.start_log = log
     self.save
+
   end
 
   #退勤時間
 
   def finish_time_set
-    self.finished_at = Time.new(
+    time = Time.new(
       Time.now.year,
       Time.now.month,
       Time.now.day,
       Time.now.hour,
       Time.now.min, 0
     )
+    self.finished_at = time
+    log = self.finish_log.to_s
+    log += "," + time.strftime("%H:%M")
+    self.finish_log = log
     self.save
   end
   #日別合計時間計算

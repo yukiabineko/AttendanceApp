@@ -89,12 +89,18 @@ def edit_permit
     if item[:edit_check] == '1'
       attendance = Attendance.find id
       if item[:edit_permit] == 'ok2'
+        s_log = attendance.start_log.to_s
+        f_log = attendance.finish_log.to_s
+        s_log += ',' + attendance.request_startedtime.strftime("%H:%M")
+        f_log += ','+  attendance.request_finishedtime.strftime("%H:%M")
         attendance.update_attributes(
           edit_permit: item[:edit_permit],
           started_at: attendance.request_startedtime,
           finished_at: attendance.request_finishedtime,
           request_startedtime: '',
-          request_finishedtime: ''
+          request_finishedtime: '',
+          start_log: s_log,
+          finish_log: f_log
         )
       elsif item[:edit_permit] == 'no2'
         attendance.update_attributes(
