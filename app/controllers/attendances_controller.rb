@@ -7,6 +7,15 @@ class AttendancesController < ApplicationController
   def edit
   end
 
+  #勤怠ログページ
+  def permit_logs
+    @user = User.find( params[:user_id] )
+    @logs = @user.permit_logs
+    @years = @user.log_years 
+    @months =@user.log_months
+  end
+ 
+
 
   def update
     if params_check                                                    #=>helper参照
@@ -115,10 +124,6 @@ def edit_permit
   redirect_to user_url(@user, params:{first_day: params[:day]})
 end
 
-#勤怠ログページ
-def log
-  
-end
 
 
   

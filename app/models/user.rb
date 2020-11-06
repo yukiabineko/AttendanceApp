@@ -101,5 +101,32 @@ end
   def month_request_count
     Month.where(superior_name: self.name).where(permit_month: :inprogress3).count
   end
-  
+
+#勤怠ログ用ベース
+def permit_logs
+  self.attendances.where(edit_permit: :ok2)
+end
+
+#勤怠ログ年 配列
+  def log_years
+    array = []
+    array << '年'
+    logs = self.permit_logs
+    logs.each do |log|
+      array << log.worked_on.strftime("%Y")
+    end
+    return array.uniq
+  end
+
+  #勤怠ログ年 配列
+  def log_months
+    array = []
+    array << '月'
+    logs = self.permit_logs
+    logs.each do |log|
+      array << log.worked_on.strftime("%-m")
+    end
+    return array.uniq
+  end
+
 end
