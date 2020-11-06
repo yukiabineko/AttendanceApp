@@ -1,0 +1,44 @@
+<div class="text-center mt-5 mb-5"><h1>勤怠ログ</h1></div>
+<button class="btn btn-secondary">リセット</button>
+
+<div class="row">
+ <div class="col-md-6">
+ <!--最初のセレクト-->
+   <div class="input-group">
+    <label class="input-group-btn m-0" >
+      <select class="custom-select" id="yearSelect">
+        <option selected>年</option>
+        <option value="one">One</option>
+        <option value="Two">Two</option>
+        <option value="Three">Three</option>
+    　</select>
+    </label>
+    <input type="text" class="form-control" readonly="" id="yearText">
+　 </div>
+ <!--次のセレクト-->
+   <div class="input-group" id="monthGroup">
+    <label class="input-group-btn m-0" >
+      <select class="custom-select" id="monthSelect">
+        <option selected>月</option>
+        <option value="one">One</option>
+        <option value="Two">Two</option>
+        <option value="Three">Three</option>
+    　</select>
+    </label>
+    <input type="text" class="form-control" readonly="" id="monthText">
+　 </div>
+ </div>
+</div>
+<table class="table table-bordered table-striped" id="logTable">
+      <thead>
+        <tr>
+            <th class="bg-light text-center">日付</th>
+            <th class="bg-light text-center">変更前出社時間</th>
+            <th class="bg-light text-center">変更前退社時間</th>
+            <th class="bg-light text-center">変更後出社</th>
+            <th class="bg-light text-center">変更後退社</th>
+            <th class="bg-light text-center">指示者</th>
+            <th class="bg-light text-center">承認日</th>
+        </tr>
+      </thead>
+</table>

@@ -109,6 +109,12 @@ def edit_permit
   redirect_to user_url(@user, params:{first_day: params[:day]})
 end
 
+#勤怠ログページ
+def log
+  
+end
+
+
   
 
 private

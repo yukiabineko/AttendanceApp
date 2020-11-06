@@ -66,6 +66,16 @@ describe "Month",type: :system do
          expect(page).to  have_content '1件の承認申請があります。' 
          click_on "1件の承認申請があります。"
          expect(page).to  have_content '[catからの一ヶ月分申請]'
+         check
+         select(value = "承認済み", from: "user[months][#{@month.id}][permit_month]") 
+         click_on '変更を送信する'
+
+         #一ヶ月申請されているか確認
+         visit login_path
+         fill_in "session[email]",	with: "cat@example.com" 
+         fill_in "session[password]",	with: "123" 
+         click_button "ログイン"
+         expect(page).to have_content '所属長承認 abiから承認済み'  
    
        end
        

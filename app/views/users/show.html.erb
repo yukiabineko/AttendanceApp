@@ -105,7 +105,7 @@
   <% if @user == current_user  %>
     <%=link_to '勤怠編集', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
     <%=link_to 'CSV出力', edit_user_attendance_path(@user, @first_day), class: 'btn btn-primary mb-1' %>
-    <%=link_to '勤怠ログ', "#", class: 'btn btn-primary btn-block' %>
+    <%=link_to '勤怠ログ', log_user_attendances_path(@user), class: 'btn btn-primary btn-block' %>
   <% end %>
   </div>
 </div>
