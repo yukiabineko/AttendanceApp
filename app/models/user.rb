@@ -121,7 +121,7 @@ end
   #勤怠ログ年 配列
   def log_months
     array = []
-    array << '月'
+    array << ' 月 '
     logs = self.permit_logs
     logs.each do |log|
       array << log.worked_on.strftime("%-m")

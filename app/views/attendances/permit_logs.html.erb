@@ -18,9 +18,9 @@
  <!--次のセレクト-->
    <div class="input-group" id="monthGroup">
     <label class="input-group-btn m-0" >
-      <select class="custom-select" id="monthSelect">
+      <select class="custom-select" id="monthSelect" onChange="selectData(<%= @user.id %>)">
         <% @months.each do |month| %>
-         <option value="<%= month %>"><%= month %></option>
+         <option value="<%= month %>"><%= month %>&emsp;</option>
        <% end %>
     　</select>
     </label>

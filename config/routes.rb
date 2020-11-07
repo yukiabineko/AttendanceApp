@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :attendances, param: :worked_on, only:[:edit, :update] do  #->勤怠編集画面
       get :permit_logs, on: :collection                                          #->勤怠ログ
+      post :permit_logs, on: :collection
     end
     member do
       get :info_edit

@@ -8,12 +8,22 @@ document.addEventListener('turbolinks:load', function(){
   var monthText = document.getElementById('monthText');
   monthSelect.style.display = 'none';
   monthText.style.display = 'none';
-  monthText.style.display = 'none';
+  var form = document.getElementById('myform');
 
+ /*年セレクト*/
   yearSelect.addEventListener('change',()=>{
     yearText.value = yearSelect.value;
-    yearSelect.value="年"
+    yearSelect.options[0].selected = true;
     monthSelect.style.display = 'block';
     monthText.style.display = 'block';
   });
+
+  /*月セレクト*/
+  
+  function selectData(id){
+    monthText.value = monthSelect.value;
+    monthSelect.options[0].selected = true;
+    alert(id);
+  }
+
 });
