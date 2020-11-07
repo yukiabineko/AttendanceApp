@@ -22,7 +22,8 @@ class AttendancesController < ApplicationController
    @first_day = Date.parse(data)
    @last_day = @first_day.end_of_month
    @user = User.find( params[:id] )
-   @datas = @user.attendances.where(worked_on: @first_day .. @last_day).where(edit_permit: :inprogress2)
+   @datas = @user.attendances.where(worked_on: @first_day .. @last_day).where(edit_permit: :ok2)
+   @datas = @datas.to_json.html_safe
    
   end
  

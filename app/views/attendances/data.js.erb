@@ -1,1 +1,24 @@
-document.getElementById('tst').textContent = <%= @datas %>;
+var datas =<%= @datas %>;
+var tbody = '';
+$("#tbody").empty();
+ document.getElementById('resetLog').style.display = 'block';
+
+datas.forEach(function(e){
+  var start = e.start_log.split(',');
+  var finish = e.finish_log.split(',');
+  var dateParse = new Date(e.updated_at);
+  var date = dateParse.getFullYear() + '-' + (dateParse.getMonth()+1) + '/' +dateParse.getDate();
+
+  tbody += '<tr>';
+  tbody += '<td class="text-center">'+ e.worked_on + '</td>';
+  tbody += '<td class="text-center">'+ start[1] + '</td>';
+  tbody += '<td class="text-center">'+ finish[1] + '</td>';
+  tbody += '<td class="text-center">'+ start.slice(-1)[0] + '</td>';
+  tbody += '<td class="text-center">'+ finish.slice(-1)[0] + '</td>';
+  tbody += '<td class="text-center">'+ e.edit_superior_name  + '</td>';
+  tbody += '<td class="text-center">'+ date  + '</td>';
+  tbody += '</tr>';
+});
+
+$('#tbody').html(tbody);
+
