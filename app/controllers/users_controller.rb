@@ -25,7 +25,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    
     if params[:first_day].nil?
       @first_day = Date.today.beginning_of_month
     else
@@ -57,6 +56,14 @@ class UsersController < ApplicationController
     @edit_request_count = @user.edit_attendance_request_count
     @superior_name = superior_name  #=>ヘルパーメゾット
     @month = @user.months.find_by(request_month: @first_day.strftime('%m月') , year: @first_day.strftime('%Y'))
+    respond_to do |format|
+      format.html do
+         
+      end 
+      format.csv do
+        send_posts_csv(@days)
+      end
+    end
   end
 
   def update

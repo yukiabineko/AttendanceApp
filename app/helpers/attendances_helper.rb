@@ -42,4 +42,20 @@ module AttendancesHelper
    def request_array
      ["申請中", "承認", "否認"]
    end
+
+  #csv 出力
+  def send_posts_csv(attendances)
+    csv_data = CSV.generate do |csv|
+      header = %w(worked_on, started_at, finished_at)
+      csv << header
+
+      attendances.each do |attendance|
+        values = [attendance.worked_on, attendance.started_at, attendance.finished_at]
+        csv << values
+      end
+
+    end
+    send_data(csv_data, filename: "勤怠.csv")
+  end
+
 end
