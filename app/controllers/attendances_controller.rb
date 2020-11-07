@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
   before_action :setting, only:[ :edit, :update]
+  skip_before_action :verify_authenticity_token, only:[:permit_logs]
 
   def show
   end
@@ -13,6 +14,12 @@ class AttendancesController < ApplicationController
     @logs = @user.permit_logs
     @years = @user.log_years 
     @months =@user.log_months
+  
+  end
+
+  def data
+   @data = params[:year].to_s + "-" + params[:month].to_s + "-01"
+   debugger
   end
  
 

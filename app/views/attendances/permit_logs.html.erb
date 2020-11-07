@@ -1,33 +1,29 @@
 <div class="text-center mt-5 mb-5"><h1>勤怠ログ</h1></div>
 
 <button class="btn btn-secondary">リセット</button>
+<h1 id="tst">test</h1>
 
 <div class="row">
  <div class="col-md-6">
+ <%= form_tag({controler: 'attendances',action: 'data'}, remote:true, id:'myform') do  %>
  <!--最初のセレクト-->
    <div class="input-group">
-    <label class="input-group-btn m-0" >
-      <select class="custom-select" id="yearSelect">
-       <% @years.each do |year| %>
-         <option value="<%= year %>"><%= year %></option>
-       <% end %>
-    　</select>
+    <label class="input-group-btn m-0" style="width:15%;" >
+      <%= select_tag nil,  options_for_select(@years), class:'custom-select', id: 'yearSelect' %>
     </label>
-    <input type="text" class="form-control" readonly="" id="yearText">
+    <%= text_field_tag :year,nil, class: "form-control", readonly: true, id: "yearText" %>
 　 </div>
  <!--次のセレクト-->
    <div class="input-group" id="monthGroup">
-    <label class="input-group-btn m-0" >
-      <select class="custom-select" id="monthSelect" onChange="selectData(<%= @user.id %>)">
-        <% @months.each do |month| %>
-         <option value="<%= month %>"><%= month %>&emsp;</option>
-       <% end %>
-    　</select>
+    <label class="input-group-btn m-0" style="width:15%;" >
+        <%= select_tag nil, options_for_select(@months), class:'custom-select', id: 'monthSelect' %>
     </label>
-    <input type="text" class="form-control" readonly="" id="monthText">
+    <%= text_field_tag :month, nil, class: "form-control", readonly: true,  id: "monthText" %>
 　 </div>
  </div>
 </div>
+
+<% end %>
 <table class="table table-bordered table-striped" id="logTable">
       <thead>
         <tr>
