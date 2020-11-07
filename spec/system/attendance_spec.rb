@@ -102,14 +102,6 @@ describe "attendances", type: :system  do
       end
       
     end
-
-
-
   end
   
-
-  
-  
-  
-
 end

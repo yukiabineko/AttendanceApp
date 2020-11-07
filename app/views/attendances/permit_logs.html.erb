@@ -8,14 +8,14 @@
  <!--最初のセレクト-->
    <div class="input-group">
     <label class="input-group-btn m-0" style="width:15%;" >
-      <%= select_tag nil,  options_for_select(@years), class:'custom-select', id: 'yearSelect' %>
+      <%= select_tag :year_select,  options_for_select(@years), class:'custom-select', id: 'yearSelect' %>
     </label>
     <%= text_field_tag :year,nil, class: "form-control", readonly: true, id: "yearText" %>
 　 </div>
  <!--次のセレクト-->
    <div class="input-group" id="monthGroup">
     <label class="input-group-btn m-0" style="width:15%;" >
-        <%= select_tag nil, options_for_select(@months), class:'custom-select', id: 'monthSelect' %>
+        <%= select_tag :month_select, options_for_select(@months), class:'custom-select', id: 'monthSelect' %>
     </label>
     <%= text_field_tag :month, nil, class: "form-control", readonly: true,  id: "monthText" %>
 　 </div>
