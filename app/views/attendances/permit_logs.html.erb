@@ -5,7 +5,7 @@
 
 <div class="row">
  <div class="col-md-6">
- <%= form_tag({controler: 'attendances',action: 'data'}, remote:true, id:'myform') do  %>
+ <%= form_tag("/data/#{@user.id}", remote:true, id:'myform') do  %>
  <!--最初のセレクト-->
    <div class="input-group">
     <label class="input-group-btn m-0" style="width:15%;" >

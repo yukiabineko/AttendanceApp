@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resources :users, only:[] do
       get :overtime_modal_open, on: :collection
     end
-    post :data, on: :collection
+   
     member do
       post :set_time
       patch :overtime_update    #=>残業申請アップデート
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
     
   end
+  post '/data/:id',to: 'attendances#data', as: :data_post
   resources :months, only:[:update] do
     patch :response_superior, on: :member
   end

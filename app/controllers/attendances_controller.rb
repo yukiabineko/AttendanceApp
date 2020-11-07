@@ -18,8 +18,12 @@ class AttendancesController < ApplicationController
   end
 
   def data
-   @data = params[:year].to_s + "-" + params[:month].to_s + "-01"
-   debugger
+   data = params[:year].to_s + "-" + params[:month].to_s + "-01"
+   @first_day = Date.parse(data)
+   @last_day = @first_day.end_of_month
+   @user = User.find( params[:id] )
+   @datas = @user.attendances.where(worked_on: @first_day .. @last_day).where(edit_permit: :inprogress2)
+   
   end
  
 
