@@ -255,16 +255,18 @@ describe "attendance log", js:true do
     fill_in "session[password]",	with: "123" 
     click_button "ログイン"
 
-    visit permit_logs_user_attendances_path(@user2)
+   
   end
 
     it "view page" do
+      visit permit_logs_user_attendances_path(@user2)
       expect(page).to have_content 'データがありません'
     end
 
     #年、月選択後データ表示
     context "year month select" do
       it "select year month" do
+        visit permit_logs_user_attendances_path(@user2)
         select(value = "2020", from: "year_select") 
         select(value = "3", from: "month_select") 
         expect(page).to have_content 'pico'
@@ -275,6 +277,7 @@ describe "attendance log", js:true do
     #リセットボタン
     context "reset button" do
       it "reset success" do
+        visit permit_logs_user_attendances_path(@user2)
         click_on 'リセット'
         expect(page).to have_no_content 'pico'        #->これは表示されなくなる。
         expect(page).to have_content 'データがありません' 
@@ -283,5 +286,31 @@ describe "attendance log", js:true do
     
 end
 ###########################################################################################################
-    
+describe "attendance csv"  do
+  before do
+    @attendance2.update_attributes(
+      worked_on: "2020-03-04",
+      started_at: "2020-03-04 01:00:00 +0900",
+      finished_at: "2020-03-04 09:00:00 +0900",
+      request_startedtime:"",
+      request_finishedtime:"",
+      edit_superior_name: @user3.name,
+      edit_permit:"ok2",
+      start_log: ",1:00,4:00,3:00",
+      finish_log: ",5:00,9:00,12:00"
+    )
+    visit login_path
+    fill_in "session[email]",	with: "cat@example.com" 
+    fill_in "session[password]",	with: "123" 
+    click_button "ログイン"
+  end
+    #csvボタン
+    context "csv button" do
+      it "reset success" do
+        click_on 'CSV出力'
+        expect(page.response_headers['Content-Disposition']).to include('勤怠.csv')
+      end
+    end   
+end  
+######################################################################################## 
 end

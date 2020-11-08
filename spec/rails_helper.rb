@@ -20,7 +20,7 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -30,7 +30,6 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
-
 
 Capybara.register_driver :remote_chrome do |app|
   url = "http://chrome:4444/wd/hub"
@@ -47,6 +46,22 @@ Capybara.register_driver :remote_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
 end
 
+Capybara.register_driver :headless_chrome do |app|
+  browser_options = Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  browser_options.args << '--no-sandbox'
+  browser_options.args << '--disable-dev-shm-usage'
+  browser_options.args << '--lang=ja'
+  browser_options.args << '--window-size=1920,1200'
+  # この行がメインの変更
+  browser_options.add_preference(:download, default_directory: DownloadHelper::PATH.to_s)
+  Capybara::Selenium::Driver.new(
+    app, browser: :chrome, options: browser_options
+  )
+end
+
+Capybara.javascript_driver = :headless_chrome
 
 
 RSpec.configure do |config|
@@ -87,6 +102,10 @@ RSpec.configure do |config|
   
   RSpec.configure do |config|
 
+    config.include DownloadHelper, type: :system, js: true
+    config.before(:suite) { Dir.mkdir(DownloadHelper::PATH) unless Dir.exist?(DownloadHelper::PATH) }
+    config.after(:example, type: :system, js: true) { clear_downloads }
+
     config.before(:each, type: :system, js: true) do
       driven_by :selenium_chrome_headless
     end
@@ -101,5 +120,7 @@ RSpec.configure do |config|
       Capybara.server_port = 3000
       Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
     end
+
+
   end
 end

@@ -45,17 +45,24 @@ module AttendancesHelper
 
   #csv 出力
   def send_posts_csv(attendances)
-    csv_data = CSV.generate do |csv|
-      header = %w(worked_on, started_at, finished_at)
+    bom = "\uFEFF"
+    csv_data = CSV.generate(bom) do |csv|
+      header = %w(日付 出勤時間 退勤時間)
       csv << header
 
       attendances.each do |attendance|
-        values = [attendance.worked_on, attendance.started_at, attendance.finished_at]
+        start = attendance.started_at.strftime("%H:%M") if attendance.started_at.present?
+        finish =  attendance.finished_at.strftime("%H:%M") if attendance.finished_at.present?
+        values = [
+          attendance.worked_on, 
+          start,
+          finish
+        ]
         csv << values
       end
 
     end
-    send_data(csv_data, filename: "勤怠.csv")
+    send_data(csv_data,dispositon: 'attachment', filename: "勤怠.csv")
   end
 
 end
