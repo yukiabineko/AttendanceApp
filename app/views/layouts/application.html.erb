@@ -20,11 +20,12 @@
            <li class="nav_item">
             <%= link_to '従業員一覧',users_path, class: 'font-weight-bold text-white mr-3' %>
            </li>
+           <li class="nav_item">
+            <%= link_to '拠点情報',shops_path, class: 'font-weight-bold text-white mr-3' %>
+           </li>
          <% end %>
         </ul>
-       
-
-      
+    
          <ul class="nav navbar-nav mr-5">
           <% if current_user.present? %>
              <li class="nav-item dropdown mr-5">

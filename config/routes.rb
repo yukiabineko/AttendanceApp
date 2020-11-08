@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   
+
   get '/login', to:'sessions#new'
   post '/login', to:'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+
+  resources :shops
 
   resources :users do
     resources :attendances, param: :worked_on, only:[:edit, :update] do  #->勤怠編集画面
@@ -18,8 +21,6 @@ Rails.application.routes.draw do
     end
     post :import, on: :collection
     get :month_modal, on: :member
-    
-   
   end
 
   resources :attendances, only:[:show] do
@@ -33,8 +34,8 @@ Rails.application.routes.draw do
       patch :permit_request         #=>上長申請返信
       patch :edit_permit        #=>勤怠変更申請アップデート
     end
-    
   end
+
   post '/data/:id',to: 'attendances#data', as: :data_post
   resources :months, only:[:update] do
     patch :response_superior, on: :member

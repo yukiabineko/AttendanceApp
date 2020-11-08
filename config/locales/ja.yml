@@ -28,6 +28,7 @@ ja:
  
     models:
       user: ユーザー
+      shop: 拠点
     attributes:
       user:
         id: ID
@@ -44,6 +45,10 @@ ja:
         uid: 社員カード番号
         basic_work_time: 基本労働時間
         superior: 上長権限
+      shop:
+        number: 拠点番号
+        name: 拠点名
+        category: 勤怠種類
   date:
     abbr_day_names:
     - 日
