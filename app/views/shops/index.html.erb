@@ -1,5 +1,11 @@
+ 
+ <div id="shop_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+ <% if @shop.errors.any?  %>
+  <% @shop.errors.full_messages.each do |error| %>
+    <div class="alert alert-danger mt-2"><%= error %></div>
+  <% end %>
+ <% end %>
 <div class="text-center mt-5 mb-5"><h1>拠点一覧</h1></div>
-
 <table class="table table-bordered table-striped mb-5">
   <thead>
     <th class="w-25"></th>
@@ -9,6 +15,21 @@
     <th class="text-center">拠点種類</th>
   </thead>
   <tbody>
+   <% @shops.each do |shop| %>
+    <tr>
+      <td class="align-middle">
+         <%= link_to '修正', edit_shop_path(shop), remote: true, class: 'btn btn-primary w-50' %>
+      </td>
+
+       <td class="align-middle text-center">
+         <%= link_to '削除', "#", class: 'btn btn-primary' %>
+      </td>
+
+      <td class="align-middle text-center"><%= shop.number %></td>
+      <td class="align-middle text-center"><%= shop.name %></td>
+      <td class="align-middle text-center"><%= shop.category %></td>
+    </tr>
+   <% end %>
   </tbody>
 </table>
 <div class="bg-light p-3">
@@ -25,7 +46,7 @@
 
         <div class="form-group">
           <%= f.label :name %>
-          <%= f.text_field :number, class: 'form-control' %>
+          <%= f.text_field :name, class: 'form-control' %>
         </div>
 
         <div class="form-group mb-5">
