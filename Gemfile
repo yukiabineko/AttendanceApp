@@ -63,6 +63,7 @@ group :test do
   gem 'rspec_junit_formatter' 
   gem 'webdrivers'
   gem 'database_cleaner'
+   gem "factory_bot_rails"
 end
 
 gem 'pg', group: :production, require: false
