@@ -6,6 +6,8 @@
           <span aria-hidden="true">&times;</span>
          </button>
          <div class="text-center"><%= "[#{@shop.name}編集]" %></div>
+         <div class="border-top mt-3 mb-3"></div>
+         <%= render 'form', {shop: @shop} %>
       </div>   
     </div>
   </div>

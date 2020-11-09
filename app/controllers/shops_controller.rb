@@ -1,5 +1,5 @@
 class ShopsController < ApplicationController
-  before_action :set_shop, only:[:edit]
+  before_action :set_shop, only:[:edit, :update, :destroy,]
   
   def index
     @shop = Shop.new
@@ -17,7 +17,19 @@ class ShopsController < ApplicationController
   end
 
   def edit
-    
+  end
+
+  def update
+    if @shop.update_attributes(shop_parameter)
+      redirect_to shops_path, notice: '拠点を編集しました。'
+    else  
+      render :index
+    end  
+  end
+
+  def destroy
+    @shop.destroy
+    redirect_to shops_path, notice: '拠点を削除しました。'
   end
   
   

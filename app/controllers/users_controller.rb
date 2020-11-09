@@ -89,7 +89,7 @@ class UsersController < ApplicationController
 #管理者による追加情報更新処理
   def info_update
     @user = User.find( params[:id] )
-    if @user.update_attributes(user_parameter)
+    if @userupdate_attribu.tes(user_parameter)
       redirect_to root_url, notice: "#{@user.name}の契約内容を更新しました。"
     else
       flash.now[:notice] = '失敗しました。'
