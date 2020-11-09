@@ -24,5 +24,35 @@ describe "Shops", type: :system do
       expect(page).to have_no_content '拠点情報'  
     end
   end
+########################################################################################
+  describe "new shop",js:true do
+    before do
+      visit shops_path
+      
+    end
+    #新規登録処理確認
+    it "add shop" do
+      click_button '拠点情報追加'
+      fill_in "shop[number]",	with: 9
+      fill_in "shop[name]",	with: "竜王"  
+      fill_in "shop[category]",	with: "システム" 
+      click_button '送信'
+      expect(page).to  have_selector '.alert-success',text: '拠点を追加しました。'
+      expect(page).to  have_content '竜王'
+      
+    end
+
+    context "edit" do
+      it "view" do
+        click_on '修正'
+        expect(page).to have_content "[#{shop.name}編集]"
+      end
+      
+    end
+    
+    
+    
+    
+  end
   
 end
