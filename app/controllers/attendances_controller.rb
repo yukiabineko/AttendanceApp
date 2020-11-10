@@ -136,6 +136,10 @@ def edit_permit
   redirect_to user_url(@user, params:{first_day: params[:day]})
 end
 
+def working
+  
+end
+
 
 
   

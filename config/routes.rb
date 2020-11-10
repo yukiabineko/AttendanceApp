@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :attendances, only:[:show] do
     resources :users, only:[] do
       get :overtime_modal_open, on: :collection
+    
     end
    
     member do
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
       patch :permit_request         #=>上長申請返信
       patch :edit_permit        #=>勤怠変更申請アップデート
     end
+    get :working, on: :collection  #=>出勤社員
   end
 
   post '/data/:id',to: 'attendances#data', as: :data_post

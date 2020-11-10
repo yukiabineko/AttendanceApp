@@ -93,6 +93,10 @@ class Attendance < ApplicationRecord
     else
     end  
   end
+
+  #出勤社員検索
+  scope :working_users, -> { where.not(started_at: nil).where(finished_at: nil).where(worked_on: Date.today)}
+ 
   
  
 end
