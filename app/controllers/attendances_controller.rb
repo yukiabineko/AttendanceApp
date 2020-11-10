@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
   before_action :setting, only:[ :edit, :update]
+  before_action :admin_check, only:[ :working ]
   skip_before_action :verify_authenticity_token, only:[:permit_logs]
 
   def show
@@ -137,7 +138,7 @@ def edit_permit
 end
 
 def working
-  
+  @attendances = Attendance.working_users
 end
 
 
@@ -182,6 +183,8 @@ private
     @week = %w(日 月 火 水 木 金 土)
     @superior_name = superior_name
   end
+
+  
   
   
 end

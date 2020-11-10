@@ -1,1 +1,25 @@
 <div class="text-center mt-5 mb-5"><h1>出勤中社員一覧</h1></div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">社員番号</th>
+            <th class="text-center">名前</th>
+        </tr>
+    </thead>
+    <tbody>
+     <% if @attendances.count == 0 %>
+       <tr>
+         <td class="text-center" colspan="2">出勤者なし</td>
+       </tr>
+     <% else %>
+        <%  @attendances.each do |attendance| %>
+        <tr>
+            <td class="text-center"><%= attendance.user.employee_number.present? ?attendance.user.employee_number : '未登録' %></td>
+            <td class="text-center"><%= attendance.user.name %></td>
+        </tr>
+      <% end %>
+     <% end %>
+     
+    </tbody>
+</table>

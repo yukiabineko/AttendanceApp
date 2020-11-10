@@ -13,7 +13,8 @@ describe "users", type: :system do
       name: 'abi2', 
       email: 'cat@example.com', 
       password: "123", 
-      password_confirmation: "123"
+      password_confirmation: "123",
+      employee_number: 1233
       )
     @user3 = User.create!(
       name: 'pico', 
@@ -313,4 +314,12 @@ describe "attendance csv"  do
     end   
 end  
 ######################################################################################## 
+#出勤者検索
+  describe "started user " do
+    before do
+      @attendance2.update_attributes(started_at)
+      visit working_attendances_path
+    end
+  end
+  
 end

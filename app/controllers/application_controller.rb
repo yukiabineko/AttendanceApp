@@ -13,5 +13,10 @@ class ApplicationController < ActionController::Base
   def login_check
     redirect_to login_path unless current_user.present?
   end
+
+  #管理者以外アクセス不可ユーザーページに戻る
+  def admin_check
+    redirect_to current_user,notice: '管理者専用です。' unless current_user.admin?
+  end
   
 end

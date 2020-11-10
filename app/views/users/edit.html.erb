@@ -1,3 +1,2 @@
 <div class="text-center mt-5 mb-5"><h1><%= "#{@user.name}編集" %></h1></div>
-<%= link_to '戻る', users_path, class:"btn btn-secondary mb-3" %>
 <%= render 'form', {user: @user} %>
