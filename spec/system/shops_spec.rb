@@ -41,15 +41,40 @@ describe "Shops", type: :system do
       expect(page).to  have_content '竜王'
       
     end
-
+   #拠点編集
     context "edit" do
       it "view" do
         click_on '修正'
         expect(page).to have_content "[#{shop.name}編集]"
+        fill_in "shop[number]",	with: 11
+        fill_in "shop[name]",	with: "甲府"  
+        fill_in "shop[category]",	with: "システム" 
+        click_button '送信'
+        expect(page).to  have_selector '.alert-success',text: '拠点を編集しました。'
       end
-      
     end
-    
+
+    #拠点削除
+    context "edit" do
+      it "view" do
+        click_on '修正'
+        expect(page).to have_content "[#{shop.name}編集]"
+        fill_in "shop[number]",	with: 11
+        fill_in "shop[name]",	with: "甲府"  
+        fill_in "shop[category]",	with: "システム" 
+        click_button '送信'
+        expect(page).to  have_selector '.alert-success',text: '拠点を編集しました。'
+      end
+    end
+
+    context " delete",js:true  do   
+      it "success" do
+        click_on "削除"
+        expect(accept_confirm).to eq "削除しますか？"
+        expect(page).to have_selector ".alert-success", text: "拠点を削除しました。"
+      end
+          
+    end
     
     
     
