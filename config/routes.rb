@@ -17,10 +17,13 @@ Rails.application.routes.draw do
       patch :info_update
       get :overtime_confirm_modal
       get :edit_permit_modal
-      
+      get :month_modal
     end
-    post :import, on: :collection
-    get :month_modal, on: :member
+    collection do
+      post :import
+      get :apis
+    end
+   
   end
 
   resources :attendances, only:[:show] do

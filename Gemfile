@@ -29,6 +29,7 @@ gem 'jquery-rails'
 gem 'bootstrap'
 gem 'mini_racer'
 gem 'enum_help'
+gem 'rack-cors'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

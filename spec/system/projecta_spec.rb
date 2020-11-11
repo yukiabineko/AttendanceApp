@@ -317,9 +317,13 @@ end
 #出勤者検索
   describe "started user " do
     before do
-      @attendance2.update_attributes(started_at)
+      @attendance2.update_attributes(worked_on: Date.today, started_at: Date.parse("2020-03-04 01:00:00 +0900"))
       visit working_attendances_path
     end
+    it "view page" do
+      expect(page).to have_content "#{@user2.name}"
+    end
+    
   end
   
 end

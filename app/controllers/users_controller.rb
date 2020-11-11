@@ -141,7 +141,11 @@ class UsersController < ApplicationController
     @request_users = request_months_users
   end
   
-
+ #api処理
+ def apis
+  @users = User.all
+   render json: @users
+ end
 
 private
   def user_parameter
@@ -176,6 +180,8 @@ private
       end
      end
    end
+
+  
   
    def updatable_attributes
     [
