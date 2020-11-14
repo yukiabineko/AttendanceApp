@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :user_set, only: [ :edit, :update, :destroy, :show, :month_modal]
   before_action :admin_check, only: [:index, :info_edit]
   before_action :other_user_access, only: [:show]
+  skip_before_action :login_check, only: [ :apis ] 
 
   def index
     @users = User.all
