@@ -148,6 +148,13 @@ class UsersController < ApplicationController
    render json: @users
  end
 
+ #フロントエンドからユーザー送信登録
+ def api_new
+   if params{
+     debugger
+   }
+ end
+
 private
   def user_parameter
     params.require(:user).permit(

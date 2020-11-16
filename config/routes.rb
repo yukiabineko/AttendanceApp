@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     collection do
       post :import
       get :apis
+      post :api_new
     end
    
   end
