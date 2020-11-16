@@ -150,9 +150,7 @@ class UsersController < ApplicationController
 
  #フロントエンドからユーザー送信登録
  def api_new
-   if params{
-     debugger
-   }
+   puts params
  end
 
 private
